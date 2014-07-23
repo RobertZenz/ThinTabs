@@ -1,0 +1,16 @@
+Thin Tabs
+---------
+
+Thin Tabs is a fork of [Small Tabs][https://addons.mozilla.org/en-US/firefox/addon/small-tabs/]
+written by ロシア and is under the Mozilla Public License v2.
+
+Thin Tabs is designed to work best with the [Classic Theme Restorer](https://addons.mozilla.org/en-US/firefox/addon/classicthemerestorer/)
+Squared Tabs (v1 and v2). You can use it with the Australis default tabs, too,
+but it looks beyond abysmal.
+
+
+Build
+-----
+
+Run make...or if you don't know what make is, zip the whole src directory and
+change the file ending to xpi.

@@ -1,0 +1,85 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * This is a fork of Small Tabs, written by ロシア,
+ * https://addons.mozilla.org/en-US/firefox/addon/small-tabs/
+ */
+
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+@-moz-document url(chrome://browser/content/browser.xul) {
+
+
+#TabsToolbar {
+	margin-top: -2px !important;
+}
+
+TabsToolbar {
+	margin-top: -2px !important;
+}
+
+.tab-background-start[selected=true]::after,
+.tab-background-start[selected=true]::before,
+.tab-background-start,
+.tab-background-end,
+.tab-background-end[selected=true]::after,
+.tab-background-end[selected=true]::before,
+.tabbrowser-tabs {
+	/* Make sure that the text is correctly aligned. */
+	-moz-box-align: none !important;
+	
+	/* Set the new height for our tabs. */
+	height: 19px !important;
+	min-height: 19px !important;
+}
+
+/* This is the box at the left and right of the tabs. */
+.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
+	-moz-padding-end: 0px !important;
+	-moz-padding-start: 0px !important;
+}
+
+/* The image of the tabs. */
+.tab-throbber,
+.tab-icon-image {
+	margin-top: -1px !important;
+}
+
+/* The image of not pinned (normal) tabs. */
+.tab-throbber:not([pinned]),
+.tab-icon-image:not([pinned]) {
+	/* Consume some of the space to our left to move the text closer if there is an icon. */
+	-moz-margin-end: -2px !important;
+	
+	margin-top: -1px !important;
+}
+
+/* The contants of the tabs. */
+.tab-content:not([pinned]) {
+	/* Needed for CTR Square Tabs v2, otherwise the close button is outside the tab. */
+	-moz-padding-end: 7px !important;
+	-moz-padding-start: 1px !important;
+}
+
+/* The label which holds the site name. */
+.tab-text.tab-label:not([pinned]) {
+	/* Move the text away from the left edge, especially needed if there is no icon. */
+	/* Part of this is consumed again bu the image. */
+	-moz-margin-start: 5px !important;
+	
+	/* Move it one pixel down so that if perfectly aligns with the icon. */
+	padding-top: 1px !important;
+}
+
+/* The close button of the tab. */
+.tab-close-button:not([pinned]) {
+	-moz-margin-start: 0px !important;
+	
+	/* Move it one pixel upwards so that it aligns with the icon. */
+	margin-top: -1px !important;
+}
+
+
+}
