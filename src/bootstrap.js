@@ -48,14 +48,18 @@ var ThinTabs = {
 		let sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
 		let uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
 		
-		sss.sheetRegistered(uri, sss.USER_SHEET) || sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
+		if (!sss.sheetRegistered(uri, sss.USER_SHEET)) {
+			sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
+		}
 	},
 
 	unloadStyle:function(){
 		let sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
 		let uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
 		
-		sss.sheetRegistered(uri,sss.USER_SHEET) && sss.unregisterSheet(uri,sss.USER_SHEET);
+		if (sss.sheetRegistered(uri, sss.USER_SHEET)) {
+			sss.unregisterSheet(uri,sss.USER_SHEET);
+		}
 	},
 		
 	loadScript:function(win){
@@ -120,17 +124,17 @@ let ResourceAlias = {
 		if(!uri) {
 			if(data.installPath.isDirectory()) {
 				//packed
-				uri=ios.newFileURI(data.installPath);
+				uri = ios.newFileURI(data.installPath);
 			} else {
 				//unpacked
-				let jarProtocolHandler=ios.getProtocolHandler("jar");
+				let jarProtocolHandler = ios.getProtocolHandler("jar");
 				jarProtocolHandler.QueryInterface(Ci.nsIJARProtocolHandler);
 				let spec = "jar:" + ios.newFileURI(data.installPath).spec + "!/";
-				uri = jarProtocolHandler.newURI(spec,null,null);
+				uri = jarProtocolHandler.newURI(spec, null, null);
 			}
 		}
 		
-		this._resProtocolHandler.setSubstitution(alias,uri);
+		this._resProtocolHandler.setSubstitution(alias, uri);
 		
 		return true;
 	},
@@ -139,7 +143,7 @@ let ResourceAlias = {
 			return false;
 		}
 		
-		this._resProtocolHandler.setSubstitution(this._alias,null);
+		this._resProtocolHandler.setSubstitution(this._alias, null);
 
 		delete this._resProtocolHandler;
 		delete this._alias;
