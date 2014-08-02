@@ -134,9 +134,7 @@ var ThinTabsResourceAlias = {
 		}
 		
 		this._resourceProtocolHandler.setSubstitution("thintabs", null);
-		
 		delete this._resourceProtocolHandler;
-		delete this._alias;
 		
 		return true;
 	}
