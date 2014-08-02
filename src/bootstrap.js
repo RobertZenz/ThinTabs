@@ -3,149 +3,139 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * This is a fork of Small Tabs, written by ロシア,
+ * This is a fork/based on Small Tabs, written by ロシア,
  * https://addons.mozilla.org/en-US/firefox/addon/small-tabs/
  */
 
-"use strict"
+"use strict";
 
-const { classes:Cc,interfaces:Ci,utils:Cu } = Components;
-
-Cu.import("resource://gre/modules/Services.jsm");
+Components.utils.import("resource://gre/modules/Services.jsm");
 
 var ThinTabs = {
-	_windowtype:"navigator:browser",
-
-	get _windows() {
-		let wins = [];
-		this._windowtype || (this._windowtype = "navigator:browser");
+	
+	getWindows : function() {
+		var windows = [];
 		
-		let cw = Services.wm.getEnumerator(this._windowtype);
+		var browserWindows = Services.wm.getEnumerator("navigator:browser");
 		
-		while (cw.hasMoreElements()) {
-			let win=cw.getNext();
-			win.QueryInterface(Ci.nsIDOMWindow);
-			wins.push(win);
+		while (browserWindows.hasMoreElements()) {
+			var browserWindow = browserWindows.getNext();
+			browserWindow.QueryInterface(Components.interfaces.nsIDOMWindow);
+			windows.push(browserWindow);
 		}
 		
-		return wins;
+		return windows;
 	},
-
-	handleEvent:function(e) {
-		let doc = e.target;
-		let win = doc.defaultView;
+	
+	handleEvent : function(e) {
+		var doc = e.target;
+		var win = doc.defaultView;
 		
 		win.removeEventListener("load", this, true);
 		
-		if (doc.documentElement.getAttribute("windowtype") != this._windowtype) {
+		if (doc.documentElement.getAttribute("windowtype") != "navigator:browser") {
 			return;
 		}
 		
 		this.loadScript(win);
 	},
-
-	loadStyle:function(){
-		let sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
-		let uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
+	
+	loadStyle : function() {
+		var sss = Components.classes["@mozilla.org/content/style-sheet-service;1"]
+				.getService(Components.interfaces.nsIStyleSheetService);
+		var uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
 		
 		if (!sss.sheetRegistered(uri, sss.USER_SHEET)) {
 			sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
 		}
 	},
-
-	unloadStyle:function(){
-		let sss = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
-		let uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
+	
+	unloadStyle : function() {
+		var sss = Components.classes["@mozilla.org/content/style-sheet-service;1"]
+				.getService(Components.interfaces.nsIStyleSheetService);
+		var uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
 		
 		if (sss.sheetRegistered(uri, sss.USER_SHEET)) {
-			sss.unregisterSheet(uri,sss.USER_SHEET);
+			sss.unregisterSheet(uri, sss.USER_SHEET);
 		}
 	},
-		
-	loadScript:function(win){
-	},
-
-	unloadScript:function(win){
-	},
-
-	onOpenWindow:function(aWindow){
-		let win = aWindow.docShell.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow);
-		win.addEventListener("load", this, true);
+	
+	loadScript : function(window) {
 	},
 	
-	onCloseWindow:function(aWindow) {
+	unloadScript : function(window) {
 	},
 	
-	onWindowTitleChange:function(aWindow,aTitle) {
+	onOpenWindow : function(window) {
+		var domWindow = window.docShell.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(
+				Components.interfaces.nsIDOMWindow);
+		domWindow.addEventListener("load", this, true);
 	},
-
-	init:function() {
+	
+	onCloseWindow : function(window) {
+	},
+	
+	onWindowTitleChange : function(window, title) {
+	},
+	
+	init : function() {
 		this.loadStyle();
-		this._wm=Services.wm;
-		this._wm.addListener(this);
-		this._windows.forEach(function(win) {
-			this.loadScript(win);
+		
+		Services.wm.addListener(this);
+		
+		this.getWindows().forEach(function(window) {
+			this.loadScript(window);
 		}, this);
 	},
 	
-	uninit:function() {
+	uninit : function() {
 		this.unloadStyle();
 		
-		if (this._wm) {
-			this._wm.removeListener(this);
-		}
+		Services.wm.removeListener(this);
 		
-		delete this._wm;
-		
-		this._windows.forEach(function(win) {
-			this.unloadScript(win);
+		this.getWindows().forEach(function(window) {
+			this.unloadScript(window);
 		}, this);
 	}
-}
+};
 
-let ResourceAlias = {
-	register:function(alias, data){
-		let ios = Services.io;
-		
-		if(!alias) {
+var ThinTabsResourceAlias = {
+	register : function(alias, data) {
+		if (this._resourceProtocolHandler) {
 			return false;
 		}
 		
-		this._alias = alias;
+		this._resourceProtocolHandler = Services.io.getProtocolHandler("resource");
+		this._resourceProtocolHandler.QueryInterface(Components.interfaces.nsIResProtocolHandler);
 		
-		if (this._resProtocolHandler) {
-			return false;
-		}
+		var uri = data.resourceURI;
 		
-		this._resProtocolHandler = ios.getProtocolHandler("resource");
-		this._resProtocolHandler.QueryInterface(Ci.nsIResProtocolHandler);
-		
-		let uri = data.resourceURI;
-		if(!uri) {
-			if(data.installPath.isDirectory()) {
-				//packed
+		if (!uri) {
+			if (data.installPath.isDirectory()) {
+				// packed
 				uri = ios.newFileURI(data.installPath);
 			} else {
-				//unpacked
-				let jarProtocolHandler = ios.getProtocolHandler("jar");
-				jarProtocolHandler.QueryInterface(Ci.nsIJARProtocolHandler);
-				let spec = "jar:" + ios.newFileURI(data.installPath).spec + "!/";
+				// unpacked
+				var jarProtocolHandler = Services.io.getProtocolHandler("jar");
+				jarProtocolHandler.QueryInterface(Components.interfaces.nsIJARProtocolHandler);
+				var spec = "jar:" + Services.io.newFileURI(data.installPath).spec + "!/";
 				uri = jarProtocolHandler.newURI(spec, null, null);
 			}
 		}
 		
-		this._resProtocolHandler.setSubstitution(alias, uri);
+		this._resourceProtocolHandler.setSubstitution("thintabs", uri);
 		
 		return true;
 	},
-	unregister:function() {
-		if(!this._resProtocolHandler) {
+	
+	unregister : function() {
+		if (!this._resourceProtocolHandler) {
 			return false;
 		}
 		
-		this._resProtocolHandler.setSubstitution(this._alias, null);
-
-		delete this._resProtocolHandler;
+		this._resourceProtocolHandler.setSubstitution("thintabs", null);
+		
+		delete this._resourceProtocolHandler;
 		delete this._alias;
 		
 		return true;
@@ -153,15 +143,12 @@ let ResourceAlias = {
 }
 
 function startup(data, reason) {
-	const alias = "thintabs";
-	ResourceAlias.register(alias, data);
-	
+	ThinTabsResourceAlias.register("thintabs", data);
 	ThinTabs.init();
 }
 
 function shutdown(data, reason) {
-	ResourceAlias.unregister();
-	
+	ThinTabsResourceAlias.unregister();
 	ThinTabs.uninit();
 }
 
@@ -170,4 +157,3 @@ function install(data, reason) {
 
 function uninstall(data, reason) {
 }
-
