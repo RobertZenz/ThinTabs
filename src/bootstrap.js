@@ -27,17 +27,17 @@ var ThinTabs = {
 		return windows;
 	},
 	
-	handleEvent : function(e) {
-		var doc = e.target;
-		var win = doc.defaultView;
+	handleEvent : function(event) {
+		var document = event.target;
+		var window = document.defaultView;
 		
-		win.removeEventListener("load", this, true);
+		window.removeEventListener("load", this, true);
 		
-		if (doc.documentElement.getAttribute("windowtype") != "navigator:browser") {
+		if (document.documentElement.getAttribute("windowtype") != "navigator:browser") {
 			return;
 		}
 		
-		this.loadScript(win);
+		this.loadScript(window);
 	},
 	
 	loadStyle : function() {
@@ -100,7 +100,7 @@ var ThinTabs = {
 };
 
 var ThinTabsResourceAlias = {
-	register : function(alias, data) {
+	register : function(data) {
 		if (this._resourceProtocolHandler) {
 			return false;
 		}
@@ -143,7 +143,7 @@ var ThinTabsResourceAlias = {
 }
 
 function startup(data, reason) {
-	ThinTabsResourceAlias.register("thintabs", data);
+	ThinTabsResourceAlias.register(data);
 	ThinTabs.init();
 }
 
