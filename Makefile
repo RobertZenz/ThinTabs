@@ -6,7 +6,7 @@ all: $(BUILD)/$(NAME).xpi
 
 $(BUILD)/$(NAME).xpi:
 	mkdir --parent $(BUILD)
-	zip -j $@ $(SRC)/*
+	cd $(SRC); zip -r ../$@ *; cd -
 	
 clean:
 	$(RM) $(BUILD)/$(NAME).xpi

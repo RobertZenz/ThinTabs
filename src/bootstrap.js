@@ -12,6 +12,9 @@
 Components.utils.import("resource://gre/modules/Services.jsm");
 
 var ThinTabs = {
+	preferences : null,
+	styleSheet : null,
+	styleSheetService : null,
 	
 	getWindows : function() {
 		var windows = [];
@@ -41,22 +44,14 @@ var ThinTabs = {
 	},
 	
 	loadStyle : function() {
-		var sss = Components.classes["@mozilla.org/content/style-sheet-service;1"]
-				.getService(Components.interfaces.nsIStyleSheetService);
-		var uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
-		
-		if (!sss.sheetRegistered(uri, sss.USER_SHEET)) {
-			sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
+		if (!this.styleSheetService.sheetRegistered(this.styleSheet, this.styleSheetService.USER_SHEET)) {
+			this.styleSheetService.loadAndRegisterSheet(this.styleSheet, this.styleSheetService.USER_SHEET);
 		}
 	},
 	
 	unloadStyle : function() {
-		var sss = Components.classes["@mozilla.org/content/style-sheet-service;1"]
-				.getService(Components.interfaces.nsIStyleSheetService);
-		var uri = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
-		
-		if (sss.sheetRegistered(uri, sss.USER_SHEET)) {
-			sss.unregisterSheet(uri, sss.USER_SHEET);
+		if (this.styleSheetService.sheetRegistered(this.styleSheet, this.styleSheetService.USER_SHEET)) {
+			this.styleSheetService.unregisterSheet(this.styleSheet, this.styleSheetService.USER_SHEET);
 		}
 	},
 	
@@ -78,7 +73,31 @@ var ThinTabs = {
 	onWindowTitleChange : function(window, title) {
 	},
 	
+	observe : function(subject, topic, data) {
+		if (topic != "nsPref:changed") {
+			return;
+		}
+		
+		switch (data) {
+			case "icon.hide":
+				if (this.preferences.getBoolPref("icon.hide")) {
+					
+				} else {
+					
+				}
+				break;
+		}
+	},
+	
 	init : function() {
+		this.preferences = Components.classes["@mozilla.org/preferences-service;1"].getService(
+				Components.interfaces.nsIPrefService).getBranch("extensions.org.bonsaimind.thintabs.");
+		this.preferences.QueryInterface(Components.interfaces.nsIPrefBranch2);
+		this.preferences.addObserver("", this, false);
+		this.styleSheet = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
+		this.styleSheetService = Components.classes["@mozilla.org/content/style-sheet-service;1"]
+				.getService(Components.interfaces.nsIStyleSheetService);
+		
 		this.loadStyle();
 		
 		Services.wm.addListener(this);

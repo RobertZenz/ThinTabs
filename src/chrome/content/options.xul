@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<prefwindow buttons="accept" id="thintabs-options" resizable="yes"
+	title="Thintabs Options" type="prefwindow"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<prefpane id="thintabs-main-pane" label="ThinTabs Settings">
+		<preferences>
+			<preference id="iconHidePreference"
+				name="extensions.org.bonsaimind.thintabs.icon.hide" type="bool" />
+		</preferences>
+
+		<groupbox orient="vertical">
+			<caption label="Tabs" />
+
+			<checkbox preference="iconHidePreference" id="iconHide"
+				label="Hide icon" />
+		</groupbox>
+	</prefpane>
+
+</prefwindow>
