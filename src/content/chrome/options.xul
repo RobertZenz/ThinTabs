@@ -19,6 +19,20 @@
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.start" type="int" />
 			<preference id="textPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.text.padding.top" type="int" />
+			<preference id="textFontFamilyPreference"
+				name="extensions.org.bonsaimind.thintabs.text.font.family" type="string" />
+			<preference id="textFontFamilyOverridePreference"
+				name="extensions.org.bonsaimind.thintabs.text.font.family.override"
+				type="bool" />
+			<preference id="textFontSizePreference"
+				name="extensions.org.bonsaimind.thintabs.text.font.size" type="int" />
+			<preference id="textFontSizeOverridePreference"
+				name="extensions.org.bonsaimind.thintabs.text.font.size.override"
+				type="bool" />
+			<preference id="textPaddingTopPreference"
+				name="extensions.org.bonsaimind.thintabs.text.padding.top" type="int" />
+			<preference id="textPaddingTopPreference"
+				name="extensions.org.bonsaimind.thintabs.text.padding.top" type="int" />
 			<preference id="throbberHidePreference"
 				name="extensions.org.bonsaimind.thintabs.throbber.hide" type="bool" />
 		</preferences>
@@ -89,6 +103,30 @@
 				</tooltip>
 				<textbox type="number" increment="1" preference="textPaddingTopPreference"
 					id="textPaddingTop" tooltip="textPaddingTopTooltip" />
+			</hbox>
+		</groupbox>
+
+		<groupbox orient="vertical">
+			<caption label="Text / Sitename" />
+
+			<checkbox preference="textFontFamilyOverridePreference" id="textFontFamilyOverride"
+				label="Override font family"
+				tooltiptext="Override the font family of the text/sitename with a custom one." />
+			<hbox align="horizontal">
+				<label control="textFontFamily" value="Custom font family: " />
+				<spacer flex="1" />
+				<textbox preference="textFontFamilyPreference" id="textFontFamily"
+					tooltiptext="Provides the possibility to set a custom font or font family for the text." />
+			</hbox>
+			
+			<checkbox preference="textFontSizeOverridePreference" id="textFontSizeOverride"
+				label="Override font size"
+				tooltiptext="Override the font size of the text/sitename with a custom one." />
+			<hbox align="horizontal">
+				<label control="textFontSize" value="Custom font size " />
+				<spacer flex="1" />
+				<textbox type="number" increment="1" preference="textFontSizePreference" id="textFontSize"
+					tooltiptext="Provides the possibility to set a custom size for the text." />
 			</hbox>
 		</groupbox>
 	</prefpane>

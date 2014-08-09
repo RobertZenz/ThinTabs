@@ -139,11 +139,31 @@ var ThinTabs = {
 						+ tabsPaddingStart + "px !important; }");
 				break;
 			
+			case "text.font.family":
+			case "text.font.family.override":
+				if (this.preferences.getBoolPref("text.font.family.override")) {
+					DynamicStyleSheets.register("text.font.family", ".tab-text.tab-label:not([pinned]) { font-family: "
+							+ this.preferences.getCharPref("text.font.family") + " !important; }");
+				} else {
+					DynamicStyleSheets.unregister("text.font.family");
+				}
+				break;
+			
+			case "text.font.size":
+			case "text.font.size.override":
+				if (this.preferences.getBoolPref("text.font.size.override")) {
+					DynamicStyleSheets.register("text.font.size", ".tab-text.tab-label:not([pinned]) { font-size: "
+							+ this.preferences.getIntPref("text.font.size") + "px !important; }");
+				} else {
+					DynamicStyleSheets.unregister("text.font.size");
+				}
+				break;
+			
 			case "text.padding.top":
 				var textPaddingTop = this.preferences.getIntPref(name);
 				
-				DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { padding-top: "
-						+ textPaddingTop + "px !important; }");
+				DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { padding-top: " + textPaddingTop
+						+ "px !important; }");
 				break;
 			
 			case "throbber.hide":
@@ -170,8 +190,14 @@ var ThinTabs = {
 		this.refreshPreference("tabs.padding.end");
 		defaultPreferences.setIntPref("tabs.padding.start", 1);
 		this.refreshPreference("tabs.padding.start");
+		defaultPreferences.setCharPref("text.font.family", "monospace");
+		defaultPreferences.setBoolPref("text.font.family.override", false);
+		this.refreshPreference("text.font.family.override");
+		defaultPreferences.setIntPref("text.font.size", 8);
+		defaultPreferences.setBoolPref("text.font.size.override", false);
+		this.refreshPreference("text.font.size.override");
 		defaultPreferences.setIntPref("text.padding.top", 1);
-		this.refreshPreference("tabs.padding.top");
+		this.refreshPreference("text.padding.top");
 		defaultPreferences.setBoolPref("throbber.hide", false);
 		this.refreshPreference("throbber.hide");
 	},

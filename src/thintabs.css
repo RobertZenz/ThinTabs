@@ -59,7 +59,7 @@ TabsToolbar {
 /* The label which holds the site name. */
 .tab-text.tab-label:not([pinned]) {
 	/* Move the text away from the left edge, especially needed if there is no icon. */
-	/* Part of this is consumed again bu the image. */
+	/* Part of this is consumed again by the image. */
 	-moz-margin-start: 5px !important;
 }
 
