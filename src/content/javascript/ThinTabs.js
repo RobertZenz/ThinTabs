@@ -13,6 +13,8 @@ var EXPORTED_SYMBOLS = [ "ThinTabs" ];
 
 Components.utils.import("resource://gre/modules/Services.jsm");
 
+Components.utils.import("chrome://thintabs/content/javascript/DynamicStyleSheets.js");
+
 var ThinTabs = {
 	preferences : null,
 	styleSheet : null,
@@ -83,9 +85,10 @@ var ThinTabs = {
 		switch (data) {
 			case "icon.hide":
 				if (this.preferences.getBoolPref("icon.hide")) {
-					
+					DynamicStyleSheets
+							.register("hideIcon", ".tab-icon-image:not([pinned]) { display: none !important}");
 				} else {
-					
+					DynamicStyleSheets.unregister("hideIcon");
 				}
 				break;
 		}

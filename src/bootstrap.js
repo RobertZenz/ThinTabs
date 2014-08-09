@@ -21,7 +21,7 @@ function startup(data, reason) {
 }
 
 function shutdown(data, reason) {
-	RsourceAlias.unregister();
+	ResourceAlias.unregister();
 	ThinTabs.uninit();
 }
 
