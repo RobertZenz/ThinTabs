@@ -1,3 +1,1 @@
-content thintabs chrome/content/
-
-overlay chrome://browser/content/browser.xul chrome://thintabs/content/options.xul
+content thintabs content/

@@ -13,7 +13,7 @@
 		</em:description>
 		
 		<!-- Options dialog -->
-		<em:optionsURL>chrome://thintabs/content/options.xul</em:optionsURL>
+		<em:optionsURL>chrome://thintabs/content/chrome/options.xul</em:optionsURL>
 		<em:optionsType>1</em:optionsType>
 		
 		<!-- If it is a bootstrap addon. -->
