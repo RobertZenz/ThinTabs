@@ -29,10 +29,6 @@ TabsToolbar {
 .tabbrowser-tabs {
 	/* Make sure that the text is correctly aligned. */
 	-moz-box-align: none !important;
-	
-	/* Set the new height for our tabs. */
-	height: 19px !important;
-	min-height: 19px !important;
 }
 
 /* This is the box at the left and right of the tabs. */
@@ -58,9 +54,6 @@ TabsToolbar {
 
 /* The contants of the tabs. */
 .tab-content:not([pinned]) {
-	/* Needed for CTR Square Tabs v2, otherwise the close button is outside the tab. */
-	-moz-padding-end: 7px !important;
-	-moz-padding-start: 1px !important;
 }
 
 /* The label which holds the site name. */
@@ -68,9 +61,6 @@ TabsToolbar {
 	/* Move the text away from the left edge, especially needed if there is no icon. */
 	/* Part of this is consumed again bu the image. */
 	-moz-margin-start: 5px !important;
-	
-	/* Move it one pixel down so that if perfectly aligns with the icon. */
-	padding-top: 1px !important;
 }
 
 /* The close button of the tab. */

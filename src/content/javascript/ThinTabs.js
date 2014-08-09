@@ -82,16 +82,98 @@ var ThinTabs = {
 			return;
 		}
 		
-		switch (data) {
-			case "icon.hide":
-				if (this.preferences.getBoolPref("icon.hide")) {
-					DynamicStyleSheets
-							.register("hideIcon", ".tab-icon-image:not([pinned]) { display: none !important}");
+		this.refreshPreference(data);
+	},
+	
+	refreshPreference : function(name) {
+		switch (name) {
+			case "close.hide":
+				if (this.preferences.getBoolPref(name)) {
+					DynamicStyleSheets.register(name, ".tab-close-button:not([pinned]) { display: none !important; }");
 				} else {
-					DynamicStyleSheets.unregister("hideIcon");
+					DynamicStyleSheets.unregister(name);
+				}
+				break;
+			
+			case "icon.hide":
+				if (this.preferences.getBoolPref(name)) {
+					DynamicStyleSheets.register(name, ".tab-icon-image:not([pinned]) { display: none !important; }");
+				} else {
+					DynamicStyleSheets.unregister(name);
+				}
+				break;
+			
+			case "tabs.height":
+				var tabsHeight = this.preferences.getIntPref(name);
+				
+				DynamicStyleSheets
+						.register(
+								name,
+								".tab-background-start[selected=true]::after,\
+								.tab-background-start[selected=true]::before,\
+								.tab-background-start,\
+								.tab-background-end,\
+								.tab-background-end[selected=true]::after,\
+								.tab-background-end[selected=true]::before,\
+								.tabbrowser-tabs {\
+								height: "
+										+ tabsHeight
+										+ "px !important;\
+								min-height: "
+										+ tabsHeight
+										+ "px !important;\
+								}");
+				break;
+			
+			case "tabs.padding.end":
+				var tabsPaddingEnd = this.preferences.getIntPref(name);
+				
+				DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-end: " + tabsPaddingEnd
+						+ "px !important; }");
+				break;
+			
+			case "tabs.padding.start":
+				var tabsPaddingStart = this.preferences.getIntPref(name);
+				
+				DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-start: "
+						+ tabsPaddingStart + "px !important; }");
+				break;
+			
+			case "text.padding.top":
+				var textPaddingTop = this.preferences.getIntPref(name);
+				
+				DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { padding-top: "
+						+ textPaddingTop + "px !important; }");
+				break;
+			
+			case "throbber.hide":
+				if (this.preferences.getBoolPref(name)) {
+					DynamicStyleSheets.register(name, ".tab-throbber:not([pinned]) { display: none !important; }");
+				} else {
+					DynamicStyleSheets.unregister(name);
 				}
 				break;
 		}
+	},
+	
+	setDefaultPreferences : function() {
+		var defaultPreferences = Components.classes["@mozilla.org/preferences-service;1"].getService(
+				Components.interfaces.nsIPrefService).getDefaultBranch("extensions.org.bonsaimind.thintabs.");
+		
+		defaultPreferences.setBoolPref("close.hide", false);
+		this.refreshPreference("close.hide");
+		defaultPreferences.setBoolPref("icon.hide", false);
+		this.refreshPreference("icon.hide");
+		defaultPreferences.setIntPref("tabs.height", 19);
+		this.refreshPreference("tabs.height");
+		defaultPreferences.setIntPref("tabs.padding.end", 7);
+		this.refreshPreference("tabs.padding.end");
+		defaultPreferences.setIntPref("tabs.padding.start", 1);
+		this.refreshPreference("tabs.padding.start");
+		defaultPreferences.setIntPref("text.padding.top", 1);
+		this.refreshPreference("tabs.padding.top");
+		defaultPreferences.setBoolPref("throbber.hide", false);
+		this.refreshPreference("throbber.hide");
 	},
 	
 	init : function() {
@@ -103,6 +185,7 @@ var ThinTabs = {
 		this.styleSheetService = Components.classes["@mozilla.org/content/style-sheet-service;1"]
 				.getService(Components.interfaces.nsIStyleSheetService);
 		
+		this.setDefaultPreferences();
 		this.loadStyle();
 		
 		Services.wm.addListener(this);
