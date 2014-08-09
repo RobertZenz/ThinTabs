@@ -10,15 +10,18 @@
 "use strict";
 
 function startup(data, reason) {
-	Components.utils.import("chrome://thintabs/content/javascript/ThinTabsResourceAlias.js");
+	// Load the dependencies in the constructor, because the chrome.manifest
+	// hasn't been read before that.
+	
+	Components.utils.import("chrome://thintabs/content/javascript/ResourceAlias.js");
 	Components.utils.import("chrome://thintabs/content/javascript/ThinTabs.js");
 	
-	ThinTabsResourceAlias.register(data);
+	ResourceAlias.register(data);
 	ThinTabs.init();
 }
 
 function shutdown(data, reason) {
-	ThinTabsResourceAlias.unregister();
+	RsourceAlias.unregister();
 	ThinTabs.uninit();
 }
 

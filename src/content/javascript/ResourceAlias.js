@@ -9,11 +9,11 @@
 
 "use strict"
 
-var EXPORTED_SYMBOLS = [ "ThinTabsResourceAlias" ];
+var EXPORTED_SYMBOLS = [ "ResourceAlias" ];
 
 Components.utils.import("resource://gre/modules/Services.jsm");
 
-var ThinTabsResourceAlias = {
+var ResourceAlias = {
 	register : function(data) {
 		if (this._resourceProtocolHandler) {
 			return false;
