@@ -14,13 +14,15 @@ var EXPORTED_SYMBOLS = [ "ResourceAlias" ];
 Components.utils.import("resource://gre/modules/Services.jsm");
 
 var ResourceAlias = {
+	resourceProtocolHandler : null,
+	
 	register : function(data) {
-		if (this._resourceProtocolHandler) {
+		if (this.resourceProtocolHandler) {
 			return false;
 		}
 		
-		this._resourceProtocolHandler = Services.io.getProtocolHandler("resource");
-		this._resourceProtocolHandler.QueryInterface(Components.interfaces.nsIResProtocolHandler);
+		this.resourceProtocolHandler = Services.io.getProtocolHandler("resource");
+		this.resourceProtocolHandler.QueryInterface(Components.interfaces.nsIResProtocolHandler);
 		
 		var uri = data.resourceURI;
 		
@@ -37,18 +39,18 @@ var ResourceAlias = {
 			}
 		}
 		
-		this._resourceProtocolHandler.setSubstitution("thintabs", uri);
+		this.resourceProtocolHandler.setSubstitution("thintabs", uri);
 		
 		return true;
 	},
 	
 	unregister : function() {
-		if (!this._resourceProtocolHandler) {
+		if (!this.resourceProtocolHandler) {
 			return false;
 		}
 		
-		this._resourceProtocolHandler.setSubstitution("thintabs", null);
-		delete this._resourceProtocolHandler;
+		this.resourceProtocolHandler.setSubstitution("thintabs", null);
+		delete this.resourceProtocolHandler;
 		
 		return true;
 	}
