@@ -41,5 +41,11 @@ var DynamicStyleSheets = {
 				this.styleSheetService.unregisterSheet(styleSheet, this.styleSheetService.USER_SHEET);
 			}
 		}
+	},
+	
+	unregisterAll : function() {
+		for ( var name in this.styleSheets) {
+			this.unregister(name);
+		}
 	}
 };

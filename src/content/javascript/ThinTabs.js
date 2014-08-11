@@ -224,6 +224,8 @@ var ThinTabs = {
 	uninit : function() {
 		this.unloadStyle();
 		
+		DynamicStyleSheets.unregisterAll();
+		
 		Services.wm.removeListener(this);
 		
 		this.getWindows().forEach(function(window) {
