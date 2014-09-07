@@ -59,7 +59,7 @@
 						value="Defines how much space is between the tab content and the left edge." />
 					<label value="Default value: 11" style="font-weight: bold;" />
 				</tooltip>
-				<textbox type="number" increment="1"
+				<textbox type="number" increment="1" min="-9999999"
 					preference="tabsPaddingStartPreference" id="tabsPaddingStart"
 					tooltip="tabsPaddingStartTooltip" />
 			</hbox>
@@ -75,8 +75,8 @@
 						style="font-style: italic;" />
 					<label value="Default value: 7" style="font-weight: bold;" />
 				</tooltip>
-				<textbox type="number" increment="1" preference="tabsPaddingEndPreference"
-					id="tabsPaddingEnd" tooltip="tabsPaddingEndTooltip" />
+				<textbox type="number" increment="1" min="-9999999"
+					preference="tabsPaddingEndPreference" id="tabsPaddingEnd" tooltip="tabsPaddingEndTooltip" />
 			</hbox>
 		</groupbox>
 

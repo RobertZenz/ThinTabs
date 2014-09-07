@@ -128,15 +128,27 @@ var ThinTabs = {
 			case "tabs.padding.end":
 				var tabsPaddingEnd = this.preferences.getIntPref(name);
 				
-				DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-end: " + tabsPaddingEnd
-						+ "px !important; }");
+				if (tabsPaddingEnd >= 0) {
+					DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-end: "
+							+ tabsPaddingEnd + "px !important; }");
+				} else {
+					DynamicStyleSheets.register(name,
+							".tab-content:not([pinned]) { -moz-padding-end: 0px !important; -moz-margin-end: "
+									+ tabsPaddingEnd + "px !important; }");
+				}
 				break;
 			
 			case "tabs.padding.start":
 				var tabsPaddingStart = this.preferences.getIntPref(name);
 				
-				DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-start: "
-						+ tabsPaddingStart + "px !important; }");
+				if (tabsPaddingStart >= 0) {
+					DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-start: "
+							+ tabsPaddingStart + "px !important; }");
+				} else {
+					DynamicStyleSheets.register(name,
+							".tab-content:not([pinned]) {  -moz-padding-start: 0px !important; -moz-margin-start: "
+									+ tabsPaddingStart + "px !important; }");
+				}
 				break;
 			
 			case "text.font.family":
