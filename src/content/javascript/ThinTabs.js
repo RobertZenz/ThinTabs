@@ -162,8 +162,13 @@ var ThinTabs = {
 			case "text.padding.top":
 				var textPaddingTop = this.preferences.getIntPref(name);
 				
-				DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { padding-top: " + textPaddingTop
-						+ "px !important; }");
+				if (textPaddingTop >= 0) {
+					DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { padding-top: "
+							+ textPaddingTop + "px !important; }");
+				} else {
+					DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { margin-top: "
+							+ textPaddingTop + "px !important; }");
+				}
 				break;
 			
 			case "throbber.hide":

@@ -101,8 +101,8 @@
 						style="font-style: italic;" />
 					<label value="Default value: 1" style="font-weight: bold;" />
 				</tooltip>
-				<textbox type="number" increment="1" preference="textPaddingTopPreference"
-					id="textPaddingTop" tooltip="textPaddingTopTooltip" />
+				<textbox type="number" increment="1" min="-9999999"
+					preference="textPaddingTopPreference" id="textPaddingTop" tooltip="textPaddingTopTooltip" />
 			</hbox>
 		</groupbox>
 
@@ -118,15 +118,15 @@
 				<textbox preference="textFontFamilyPreference" id="textFontFamily"
 					tooltiptext="Provides the possibility to set a custom font or font family for the text." />
 			</hbox>
-			
+
 			<checkbox preference="textFontSizeOverridePreference" id="textFontSizeOverride"
 				label="Override font size"
 				tooltiptext="Override the font size of the text/sitename with a custom one." />
 			<hbox align="horizontal">
 				<label control="textFontSize" value="Custom font size " />
 				<spacer flex="1" />
-				<textbox type="number" increment="1" preference="textFontSizePreference" id="textFontSize"
-					tooltiptext="Provides the possibility to set a custom size for the text." />
+				<textbox type="number" increment="1" preference="textFontSizePreference"
+					id="textFontSize" tooltiptext="Provides the possibility to set a custom size for the text." />
 			</hbox>
 		</groupbox>
 	</prefpane>
