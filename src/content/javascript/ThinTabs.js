@@ -154,13 +154,8 @@ var ThinTabs = {
 			case "tabs.padding.top":
 				var tabsPaddingTop = this.preferences.getIntPref(name);
 				
-				if (tabsPaddingTop >= 0) {
-					DynamicStyleSheets.register(name, ".tab-content > * { margin-top: " + tabsPaddingTop
-							+ "px !important; }");
-				} else {
-					DynamicStyleSheets.register(name, ".tab-content > * { margin-top: " + tabsPaddingTop
-							+ "px !important; }");
-				}
+				DynamicStyleSheets.register(name, ".tab-content > * { margin-top: " + tabsPaddingTop
+						+ "px !important; }");
 				break;
 			
 			case "text.font.family":
