@@ -146,7 +146,7 @@ var ThinTabs = {
 							+ tabsPaddingStart + "px !important; }");
 				} else {
 					DynamicStyleSheets.register(name,
-							".tab-content:not([pinned]) {  -moz-padding-start: 0px !important; -moz-margin-start: "
+							".tab-content:not([pinned]) { -moz-padding-start: 0px !important; -moz-margin-start: "
 									+ tabsPaddingStart + "px !important; }");
 				}
 				break;
