@@ -52,7 +52,7 @@ TabsToolbar {
 	margin-top: -1px !important;
 }
 
-/* The contants of the tabs. */
+/* The contents of the tabs. */
 .tab-content:not([pinned]) {
 }
 
