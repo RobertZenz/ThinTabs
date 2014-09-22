@@ -151,6 +151,18 @@ var ThinTabs = {
 				}
 				break;
 			
+			case "tabs.padding.top":
+				var tabsPaddingTop = this.preferences.getIntPref(name);
+				
+				if (tabsPaddingTop >= 0) {
+					DynamicStyleSheets.register(name, ".tab-content > * { margin-top: " + tabsPaddingTop
+							+ "px !important; }");
+				} else {
+					DynamicStyleSheets.register(name, ".tab-content > * { margin-top: " + tabsPaddingTop
+							+ "px !important; }");
+				}
+				break;
+			
 			case "text.font.family":
 			case "text.font.family.override":
 				if (this.preferences.getBoolPref("text.font.family.override")) {
@@ -207,6 +219,8 @@ var ThinTabs = {
 		this.refreshPreference("tabs.padding.end");
 		defaultPreferences.setIntPref("tabs.padding.start", 1);
 		this.refreshPreference("tabs.padding.start");
+		defaultPreferences.setIntPref("tabs.padding.top", 0);
+		this.refreshPreference("tabs.padding.top");
 		defaultPreferences.setCharPref("text.font.family", "monospace");
 		defaultPreferences.setBoolPref("text.font.family.override", false);
 		this.refreshPreference("text.font.family.override");

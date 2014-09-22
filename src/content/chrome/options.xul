@@ -17,6 +17,8 @@
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.end" type="int" />
 			<preference id="tabsPaddingStartPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.start" type="int" />
+			<preference id="tabsPaddingTopPreference"
+				name="extensions.org.bonsaimind.thintabs.tabs.padding.top" type="int" />
 			<preference id="textPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.text.padding.top" type="int" />
 			<preference id="textFontFamilyPreference"
@@ -49,6 +51,22 @@
 				</tooltip>
 				<textbox type="number" increment="1" preference="tabsHeightPreference"
 					id="tabsHeight" tooltip="tabsHeightTooltip" />
+			</hbox>
+
+			<hbox align="horizontal">
+				<label control="tabsPaddingTop" value="Padding top: " />
+				<spacer flex="1" />
+				<tooltip id="tabsPaddingTopTooltip">
+					<label
+						value="Defines how much space is between the tab content and the top edge." />
+					<label
+						value="Note that this setting might interfer with the padding for the text and might not always work."
+						style="font-style: italic;" />
+					<label value="Default value: 0" style="font-weight: bold;" />
+				</tooltip>
+				<textbox type="number" increment="1" min="-9999999"
+					preference="tabsPaddingTopPreference" id="tabsPaddingTop"
+					tooltip="tabsPaddingTopTooltip" />
 			</hbox>
 
 			<hbox align="horizontal">
