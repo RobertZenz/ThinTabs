@@ -16,10 +16,6 @@
 	margin-top: -2px !important;
 }
 
-TabsToolbar {
-	margin-top: -2px !important;
-}
-
 .tab-background-start[selected=true]::after,
 .tab-background-start[selected=true]::before,
 .tab-background-start,
