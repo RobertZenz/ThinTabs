@@ -12,7 +12,6 @@ var EXPORTED_SYMBOLS = [ "DynamicStyleSheets" ];
 Components.utils.import("resource://gre/modules/Services.jsm");
 
 var DynamicStyleSheets = {
-	prefix : "",
 	styleSheets : {},
 	styleSheetService : Components.classes["@mozilla.org/content/style-sheet-service;1"]
 			.getService(Components.interfaces.nsIStyleSheetService),
@@ -25,10 +24,9 @@ var DynamicStyleSheets = {
 		styleSheetContent = styleSheetContent + style;
 		styleSheetContent = styleSheetContent + "}";
 		
-		this.styleSheets[this.prefix + name] = Services.io.newURI("data:text/css;base64," + btoa(styleSheetContent),
-				null, null);
+		this.styleSheets[name] = Services.io.newURI("data:text/css;base64," + btoa(styleSheetContent), null, null);
 		
-		var styleSheet = this.styleSheets[this.prefix + name];
+		var styleSheet = this.styleSheets[name];
 		
 		if (!this.styleSheetService.sheetRegistered(styleSheet, this.styleSheetService.USER_SHEET)) {
 			this.styleSheetService.loadAndRegisterSheet(styleSheet, this.styleSheetService.USER_SHEET);
@@ -36,7 +34,7 @@ var DynamicStyleSheets = {
 	},
 	
 	unregister : function(name) {
-		var styleSheet = this.styleSheets[this.prefix + name];
+		var styleSheet = this.styleSheets[name];
 		
 		if (styleSheet != null) {
 			if (this.styleSheetService.sheetRegistered(styleSheet, this.styleSheetService.USER_SHEET)) {

@@ -16,6 +16,7 @@ Components.utils.import("resource://gre/modules/Services.jsm");
 Components.utils.import("chrome://thintabs/content/javascript/DynamicStyleSheets.js");
 
 var ThinTabs = {
+	dynamicStyleSheets : null,
 	preferences : null,
 	styleSheet : null,
 	styleSheetService : null,
@@ -251,8 +252,6 @@ var ThinTabs = {
 	},
 	
 	init : function() {
-		DynamicStyleSheets.prefix = "extensions.org.bonsaimind.thintabs.";
-		
 		this.preferences = Components.classes["@mozilla.org/preferences-service;1"].getService(
 				Components.interfaces.nsIPrefService).getBranch("extensions.org.bonsaimind.thintabs.");
 		this.preferences.QueryInterface(Components.interfaces.nsIPrefBranch2);
