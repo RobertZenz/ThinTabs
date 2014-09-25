@@ -95,12 +95,26 @@ var ThinTabs = {
 				}
 				break;
 			
+			case "close.padding.top":
+				var closePaddingTop = this.preferences.getIntPref(name);
+				
+				DynamicStyleSheets.register(name, ".tab-close-button { margin-top: " + closePaddingTop
+						+ "px !important; }");
+				break;
+			
 			case "icon.hide":
 				if (this.preferences.getBoolPref(name)) {
 					DynamicStyleSheets.register(name, ".tab-icon-image:not([pinned]) { display: none !important; }");
 				} else {
 					DynamicStyleSheets.unregister(name);
 				}
+				break;
+			
+			case "icon.padding.top":
+				var iconPaddingTop = this.preferences.getIntPref(name);
+				
+				DynamicStyleSheets.register(name, ".tab-icon-image { margin-top: " + iconPaddingTop
+						+ "px !important; }");
 				break;
 			
 			case "tabs.height":
@@ -151,13 +165,6 @@ var ThinTabs = {
 				}
 				break;
 			
-			case "tabs.padding.top":
-				var tabsPaddingTop = this.preferences.getIntPref(name);
-				
-				DynamicStyleSheets.register(name, ".tab-content > * { margin-top: " + tabsPaddingTop
-						+ "px !important; }");
-				break;
-			
 			case "text.font.family":
 			case "text.font.family.override":
 				if (this.preferences.getBoolPref("text.font.family.override")) {
@@ -206,24 +213,39 @@ var ThinTabs = {
 		
 		defaultPreferences.setBoolPref("close.hide", false);
 		this.refreshPreference("close.hide");
+		
+		defaultPreferences.setIntPref("close.padding.top", -1);
+		this.refreshPreference("close.padding.top");
+		
 		defaultPreferences.setBoolPref("icon.hide", false);
 		this.refreshPreference("icon.hide");
+		
+		defaultPreferences.setIntPref("icon.padding.top", -1);
+		this.refreshPreference("icon.padding.top");
+		
 		defaultPreferences.setIntPref("tabs.height", 19);
 		this.refreshPreference("tabs.height");
+		
 		defaultPreferences.setIntPref("tabs.padding.end", 7);
 		this.refreshPreference("tabs.padding.end");
+		
 		defaultPreferences.setIntPref("tabs.padding.start", 1);
 		this.refreshPreference("tabs.padding.start");
+		
 		defaultPreferences.setIntPref("tabs.padding.top", 0);
 		this.refreshPreference("tabs.padding.top");
+		
 		defaultPreferences.setCharPref("text.font.family", "monospace");
 		defaultPreferences.setBoolPref("text.font.family.override", false);
 		this.refreshPreference("text.font.family.override");
+		
 		defaultPreferences.setIntPref("text.font.size", 8);
 		defaultPreferences.setBoolPref("text.font.size.override", false);
 		this.refreshPreference("text.font.size.override");
+		
 		defaultPreferences.setIntPref("text.padding.top", 1);
 		this.refreshPreference("text.padding.top");
+		
 		defaultPreferences.setBoolPref("throbber.hide", false);
 		this.refreshPreference("throbber.hide");
 	},

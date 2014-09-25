@@ -9,16 +9,18 @@
 		<preferences>
 			<preference id="closeHidePreference"
 				name="extensions.org.bonsaimind.thintabs.close.hide" type="bool" />
+			<preference id="closePaddingTopPreference"
+				name="extensions.org.bonsaimind.thintabs.close.padding.top" type="int" />
 			<preference id="iconHidePreference"
 				name="extensions.org.bonsaimind.thintabs.icon.hide" type="bool" />
+			<preference id="iconPaddingTopPreference"
+				name="extensions.org.bonsaimind.thintabs.icon.padding.top" type="int" />
 			<preference id="tabsHeightPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.height" type="int" />
 			<preference id="tabsPaddingEndPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.end" type="int" />
 			<preference id="tabsPaddingStartPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.start" type="int" />
-			<preference id="tabsPaddingTopPreference"
-				name="extensions.org.bonsaimind.thintabs.tabs.padding.top" type="int" />
 			<preference id="textPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.text.padding.top" type="int" />
 			<preference id="textFontFamilyPreference"
@@ -54,22 +56,6 @@
 			</hbox>
 
 			<hbox align="horizontal">
-				<label control="tabsPaddingTop" value="Padding top: " />
-				<spacer flex="1" />
-				<tooltip id="tabsPaddingTopTooltip">
-					<label
-						value="Defines how much space is between the tab content and the top edge." />
-					<label
-						value="Note that this setting might interfer with the padding for the text and might not always work."
-						style="font-style: italic;" />
-					<label value="Default value: 0" style="font-weight: bold;" />
-				</tooltip>
-				<textbox type="number" increment="1" min="-9999999"
-					preference="tabsPaddingTopPreference" id="tabsPaddingTop"
-					tooltip="tabsPaddingTopTooltip" />
-			</hbox>
-
-			<hbox align="horizontal">
 				<label control="tabsPaddingStart" value="Padding left: " />
 				<spacer flex="1" />
 				<tooltip id="tabsPaddingStartTooltip">
@@ -99,17 +85,31 @@
 		</groupbox>
 
 		<groupbox orient="vertical">
-			<caption label="Tab Elements" />
+			<caption label="Icon / Throbber" />
 
 			<checkbox preference="iconHidePreference" id="iconHide"
 				label="Hide icon" tooltiptext="Removes the page/site icon from the tabs." />
 			<checkbox preference="throbberHidePreference" id="throbberHide"
 				label="Hide throbber (loading animation)" tooltiptext="Removes the throbber aka loading animation from the tabs." />
-			<checkbox preference="closeHidePreference" id="closeHide"
-				label="Hide close button" tooltiptext="Removes the close button from the tabs." />
 
 			<hbox align="horizontal">
-				<label control="textPaddingTop" value="Text padding top: " />
+				<label control="iconPaddingTop" value="Padding top: " />
+				<spacer flex="1" />
+				<tooltip id="iconPaddingTopTooltip">
+					<label
+						value="Defines how much space is between the icon/throbber and the top edge." />
+					<label value="Default value: -1" style="font-weight: bold;" />
+				</tooltip>
+				<textbox type="number" increment="1" min="-9999999"
+					preference="iconPaddingTopPreference" id="iconPaddingTop" tooltip="iconPaddingTopTooltip" />
+			</hbox>
+		</groupbox>
+
+		<groupbox orient="vertical">
+			<caption label="Text / Sitename" />
+
+			<hbox align="horizontal">
+				<label control="textPaddingTop" value="Padding top: " />
 				<spacer flex="1" />
 				<tooltip id="textPaddingTopTooltip">
 					<label
@@ -122,10 +122,6 @@
 				<textbox type="number" increment="1" min="-9999999"
 					preference="textPaddingTopPreference" id="textPaddingTop" tooltip="textPaddingTopTooltip" />
 			</hbox>
-		</groupbox>
-
-		<groupbox orient="vertical">
-			<caption label="Text / Sitename" />
 
 			<checkbox preference="textFontFamilyOverridePreference" id="textFontFamilyOverride"
 				label="Override font family"
@@ -145,6 +141,26 @@
 				<spacer flex="1" />
 				<textbox type="number" increment="1" preference="textFontSizePreference"
 					id="textFontSize" tooltiptext="Provides the possibility to set a custom size for the text." />
+			</hbox>
+		</groupbox>
+
+		<groupbox orient="vertical">
+			<caption label="Close button" />
+
+			<checkbox preference="closeHidePreference" id="closeHide"
+				label="Hide" tooltiptext="Removes the close button from the tabs." />
+
+			<hbox align="horizontal">
+				<label control="closePaddingTop" value="Padding top: " />
+				<spacer flex="1" />
+				<tooltip id="closePaddingTopTooltip">
+					<label
+						value="Defines how much space is between the close button and the top edge." />
+					<label value="Default value: -1" style="font-weight: bold;" />
+				</tooltip>
+				<textbox type="number" increment="1" min="-9999999"
+					preference="closePaddingTopPreference" id="closePaddingTop"
+					tooltip="closePaddingTopTooltip" />
 			</hbox>
 		</groupbox>
 	</prefpane>

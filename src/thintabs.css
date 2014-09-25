@@ -36,7 +36,6 @@
 /* The image of the tabs. */
 .tab-throbber,
 .tab-icon-image {
-	margin-top: -1px !important;
 }
 
 /* The image of not pinned (normal) tabs. */
@@ -44,8 +43,6 @@
 .tab-icon-image:not([pinned]) {
 	/* Consume some of the space to our left to move the text closer if there is an icon. */
 	-moz-margin-end: -2px !important;
-	
-	margin-top: -1px !important;
 }
 
 /* The contents of the tabs. */
@@ -62,9 +59,6 @@
 /* The close button of the tab. */
 .tab-close-button:not([pinned]) {
 	-moz-margin-start: 0px !important;
-	
-	/* Move it one pixel upwards so that it aligns with the icon. */
-	margin-top: -1px !important;
 }
 
 
