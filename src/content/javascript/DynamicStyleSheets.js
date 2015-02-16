@@ -13,8 +13,7 @@ Components.utils.import("resource://gre/modules/Services.jsm");
 
 var DynamicStyleSheets = {
 	styleSheets : {},
-	styleSheetService : Components.classes["@mozilla.org/content/style-sheet-service;1"]
-			.getService(Components.interfaces.nsIStyleSheetService),
+	styleSheetService : Components.classes["@mozilla.org/content/style-sheet-service;1"].getService(Components.interfaces.nsIStyleSheetService),
 	
 	register : function(name, style) {
 		this.unregister(name);

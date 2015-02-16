@@ -67,8 +67,7 @@ var ThinTabs = {
 	},
 	
 	onOpenWindow : function(window) {
-		var domWindow = window.docShell.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(
-				Components.interfaces.nsIDOMWindow);
+		var domWindow = window.docShell.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindow);
 		domWindow.addEventListener("load", this, true);
 	},
 	
@@ -121,10 +120,7 @@ var ThinTabs = {
 			case "tabs.height":
 				var tabsHeight = this.preferences.getIntPref(name);
 				
-				DynamicStyleSheets
-						.register(
-								name,
-								".tab-background-start[selected=true]::after,\
+				DynamicStyleSheets.register(name, ".tab-background-start[selected=true]::after,\
 								.tab-background-start[selected=true]::before,\
 								.tab-background-start,\
 								.tab-background-end,\
@@ -132,11 +128,11 @@ var ThinTabs = {
 								.tab-background-end[selected=true]::before,\
 								.tabbrowser-tabs {\
 								height: "
-										+ tabsHeight
-										+ "px !important;\
+						+ tabsHeight
+						+ "px !important;\
 								min-height: "
-										+ tabsHeight
-										+ "px !important;\
+						+ tabsHeight
+						+ "px !important;\
 								}");
 				break;
 			
@@ -147,9 +143,8 @@ var ThinTabs = {
 					DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-end: "
 							+ tabsPaddingEnd + "px !important; }");
 				} else {
-					DynamicStyleSheets.register(name,
-							".tab-content:not([pinned]) { -moz-padding-end: 0px !important; -moz-margin-end: "
-									+ tabsPaddingEnd + "px !important; }");
+					DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-end: 0px !important; -moz-margin-end: "
+							+ tabsPaddingEnd + "px !important; }");
 				}
 				break;
 			
@@ -160,9 +155,8 @@ var ThinTabs = {
 					DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-start: "
 							+ tabsPaddingStart + "px !important; }");
 				} else {
-					DynamicStyleSheets.register(name,
-							".tab-content:not([pinned]) { -moz-padding-start: 0px !important; -moz-margin-start: "
-									+ tabsPaddingStart + "px !important; }");
+					DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-start: 0px !important; -moz-margin-start: "
+							+ tabsPaddingStart + "px !important; }");
 				}
 				break;
 			
@@ -209,8 +203,7 @@ var ThinTabs = {
 	},
 	
 	setDefaultPreferences : function() {
-		var defaultPreferences = Components.classes["@mozilla.org/preferences-service;1"].getService(
-				Components.interfaces.nsIPrefService).getDefaultBranch("extensions.org.bonsaimind.thintabs.");
+		var defaultPreferences = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getDefaultBranch("extensions.org.bonsaimind.thintabs.");
 		
 		defaultPreferences.setBoolPref("close.hide", false);
 		this.refreshPreference("close.hide");
@@ -252,13 +245,11 @@ var ThinTabs = {
 	},
 	
 	init : function() {
-		this.preferences = Components.classes["@mozilla.org/preferences-service;1"].getService(
-				Components.interfaces.nsIPrefService).getBranch("extensions.org.bonsaimind.thintabs.");
+		this.preferences = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService).getBranch("extensions.org.bonsaimind.thintabs.");
 		this.preferences.QueryInterface(Components.interfaces.nsIPrefBranch2);
 		this.preferences.addObserver("", this, false);
 		this.styleSheet = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
-		this.styleSheetService = Components.classes["@mozilla.org/content/style-sheet-service;1"]
-				.getService(Components.interfaces.nsIStyleSheetService);
+		this.styleSheetService = Components.classes["@mozilla.org/content/style-sheet-service;1"].getService(Components.interfaces.nsIStyleSheetService);
 		
 		this.setDefaultPreferences();
 		this.loadStyle();
