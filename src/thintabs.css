@@ -13,7 +13,6 @@
 
 
 #TabsToolbar {
-	margin-top: -2px !important;
 }
 
 .tab-background-start[selected=true]::after,
