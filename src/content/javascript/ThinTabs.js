@@ -17,37 +17,17 @@ Components.utils.import("chrome://thintabs/content/javascript/DynamicStyleSheets
 Components.utils.import("chrome://thintabs/content/javascript/Preferences.js");
 
 var ThinTabs = {
-	dynamicStyleSheets : null,
-	styleSheet : null,
-	styleSheetService : null,
-	
 	destroy : function() {
-		this.unloadStyle();
-		
 		Preferences.destroy();
 		DynamicStyleSheets.unregisterAll();
 	},
 	
 	init : function() {
-		this.styleSheet = Services.io.newURI("resource://thintabs/thintabs.css", null, null);
-		this.styleSheetService = Components.classes["@mozilla.org/content/style-sheet-service;1"]
-				.getService(Components.interfaces.nsIStyleSheetService);
+		DynamicStyleSheets.init();
+		DynamicStyleSheets.registerPath("main", "resource://thintabs/content/css/main.css");
 		
 		Preferences.init("extensions.org.bonsaimind.thintabs.");
 		this.initPreferences();
-		this.loadStyle();
-	},
-	
-	loadStyle : function() {
-		if (!this.styleSheetService.sheetRegistered(this.styleSheet, this.styleSheetService.USER_SHEET)) {
-			this.styleSheetService.loadAndRegisterSheet(this.styleSheet, this.styleSheetService.USER_SHEET);
-		}
-	},
-	
-	unloadStyle : function() {
-		if (this.styleSheetService.sheetRegistered(this.styleSheet, this.styleSheetService.USER_SHEET)) {
-			this.styleSheetService.unregisterSheet(this.styleSheet, this.styleSheetService.USER_SHEET);
-		}
 	},
 	
 	initPreferences : function() {
