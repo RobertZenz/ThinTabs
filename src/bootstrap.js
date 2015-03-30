@@ -22,7 +22,7 @@ function startup(data, reason) {
 
 function shutdown(data, reason) {
 	ResourceAlias.unregister();
-	ThinTabs.uninit();
+	ThinTabs.destroy();
 }
 
 function install(data, reason) {
