@@ -13,6 +13,7 @@ var EXPORTED_SYMBOLS = [ "ThinTabs" ];
 
 Components.utils.import("resource://gre/modules/Services.jsm");
 
+Components.utils.import("chrome://thintabs/content/javascript/CSSBuilder.js");
 Components.utils.import("chrome://thintabs/content/javascript/DynamicStyleSheets.js");
 Components.utils.import("chrome://thintabs/content/javascript/Preferences.js");
 
@@ -33,71 +34,56 @@ var ThinTabs = {
 	initPreferences : function() {
 		Preferences.registerBool("close.hide", false, function(name, value) {
 			if (value) {
-				DynamicStyleSheets.register(name, ".tab-close-button:not([pinned]) { display: none !important; }");
+				var css = new CSSBuilder(".tab-close-button:not([pinned])").hide();
+				DynamicStyleSheets.register(name, css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister(name);
 			}
 		});
 		Preferences.registerInt("close.padding.top", -1, function(name, value) {
-			DynamicStyleSheets.register(name, ".tab-close-button { margin-top: " + value + "px !important; }");
+			var css = new CSSBuilder(".tab-close-button").autoPadding("top", value);
+			DynamicStyleSheets.register(name, css.toCSS());
 		});
 		
 		Preferences.registerBool("icon.hide", false, function(name, value) {
 			if (value) {
-				DynamicStyleSheets.register(name, ".tab-icon-image:not([pinned]) { display: none !important; }");
+				var css = new CSSBuilder(".tab-icon-image:not([pinned])").hide();
+				DynamicStyleSheets.register(name, css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister(name);
 			}
 		});
 		Preferences.registerInt("icon.padding.top", -1, function(name, value) {
-			DynamicStyleSheets.register(name, ".tab-icon-image { margin-top: " + value + "px !important; }");
+			var css = new CSSBuilder(".tab-icon-image").autoPadding("top", value);
+			DynamicStyleSheets.register(name, css.toCSS());
 		});
 		
-		Preferences
-				.registerInt("tabs.height", 19, function(name, value) {
-					DynamicStyleSheets
-							.register(name, ".tab-background-start[selected=true]::after,\
-								.tab-background-start[selected=true]::before,\
-								.tab-background-start,\
-								.tab-background-end,\
-								.tab-background-end[selected=true]::after,\
-								.tab-background-end[selected=true]::before,\
-								.tabbrowser-tabs {\
-								height: "
-									+ value
-									+ "px !important;\
-								min-height: "
-									+ value
-									+ "px !important;\
-								}");
-				});
-		Preferences
-				.registerInt("tabs.padding.end", 7, function(name, value) {
-					if (value >= 0) {
-						DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-end: " + value
-								+ "px !important; }");
-					} else {
-						DynamicStyleSheets
-								.register(name, ".tab-content:not([pinned]) { -moz-padding-end: 0px !important; -moz-margin-end: "
-										+ value + "px !important; }");
-					}
-				});
-		Preferences
-				.registerInt("tabs.padding.start", 1, function(name, value) {
-					if (value >= 0) {
-						DynamicStyleSheets.register(name, ".tab-content:not([pinned]) { -moz-padding-start: " + value
-								+ "px !important; }");
-					} else {
-						DynamicStyleSheets
-								.register(name, ".tab-content:not([pinned]) { -moz-padding-start: 0px !important; -moz-margin-start: "
-										+ value + "px !important; }");
-					}
-				});
+		Preferences.registerInt("tabs.height", 19, function(name, value) {
+			var css = new CSSBuilder(".tab-background-start[selected=true]::after");
+			css = css.addSelector(".tab-background-start[selected=true]::before");
+			css = css.addSelector(".tab-background-start");
+			css = css.addSelector(".tab-background-end");
+			css = css.addSelector(".tab-background-end[selected=true]::after");
+			css = css.addSelector(".tab-background-end[selected=true]::before");
+			css = css.addSelector(".tabbrowser-tabs");
+			css = css.height(value);
+			css = css.minHeight(value);
+			DynamicStyleSheets.register(name, css.toCSS());
+		});
+		Preferences.registerInt("tabs.padding.end", 7, function(name, value) {
+			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("end", value);
+			DynamicStyleSheets.register(name, css.toCSS());
+		});
+		Preferences.registerInt("tabs.padding.start", 1, function(name, value) {
+			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("start", value);
+			DynamicStyleSheets.register(name, css.toCSS());
+		});
 		
 		var fontFamilyFunction = function(name, value) {
 			if (Preferences.getBool("text.font.family.override")) {
-				DynamicStyleSheets.register("text.font.family", ".tab-text.tab-label:not([pinned]) { font-family: "
-						+ Preferences.getInt("text.font.family") + " !important; }");
+				var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
+				css = css.fontFamily(Preferences.getChar("text.font.family"));
+				DynamicStyleSheets.register("text.font.family", css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister("text.font.family");
 			}
@@ -107,8 +93,9 @@ var ThinTabs = {
 		
 		var fontSizeFunction = function(name, value) {
 			if (Preferences.getBool("text.font.size.override")) {
-				DynamicStyleSheets.register("text.font.size", ".tab-text.tab-label:not([pinned]) { font-size: "
-						+ Preferences.getInt("text.font.size") + "px !important; }");
+				var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
+				css = css.fontSize(Preferences.getInt("text.font.size"));
+				DynamicStyleSheets.register("text.font.size", css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister("text.font.size");
 			}
@@ -117,18 +104,14 @@ var ThinTabs = {
 		Preferences.registerBool("text.font.size.override", false, fontSizeFunction);
 		
 		Preferences.registerInt("text.padding.top", 1, function(name, value) {
-			if (value >= 0) {
-				DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { padding-top: " + value
-						+ "px !important; }");
-			} else {
-				DynamicStyleSheets.register(name, ".tab-text.tab-label:not([pinned]) { margin-top: " + value
-						+ "px !important; }");
-			}
+			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])").autoPadding("top", value);
+			DynamicStyleSheets.register(name, css.toCSS());
 		});
 		
 		Preferences.registerBool("throbber.hide", false, function(name, value) {
 			if (value) {
-				DynamicStyleSheets.register(name, ".tab-throbber:not([pinned]) { display: none !important; }");
+				var css = new CSSBuilder(".tab-throbber:not([pinned])").hide();
+				DynamicStyleSheets.register(name, css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister(name);
 			}
