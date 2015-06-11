@@ -22,6 +22,9 @@
 			<preference id="tabsHeightPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.height"
 				type="int" />
+			<preference id="tabsHidePreference"
+				name="extensions.org.bonsaimind.thintabs.tabs.hide"
+				type="bool"/>
 			<preference id="tabsPaddingEndPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.end"
 				type="int" />
@@ -56,6 +59,11 @@
 		
 		<groupbox orient="vertical">
 			<caption label="Tabs" />
+			
+			<checkbox id="tabsHide"
+				label="Hide bar"
+				preference="tabsHidePreference"
+				tooltiptext="Complete hides the tab bar, it will never be visible again." />
 			
 			<hbox align="horizontal">
 				<label control="tabsHeight" value="Height: " />

@@ -70,6 +70,14 @@ var ThinTabs = {
 			css = css.minHeight(value);
 			DynamicStyleSheets.register(name, css.toCSS());
 		});
+		Preferences.registerBool("tabs.hide", false, function(name, value) {
+			if (value) {
+				var css = new CSSBuilder("#TabsToolbar").hide();
+				DynamicStyleSheets.register(name, css.toCSS());
+			} else {
+				DynamicStyleSheets.unregister(name);
+			}
+		});
 		Preferences.registerInt("tabs.padding.end", 7, function(name, value) {
 			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("end", value);
 			DynamicStyleSheets.register(name, css.toCSS());
