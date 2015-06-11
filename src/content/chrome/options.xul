@@ -46,6 +46,9 @@
 			<preference id="textFontSizeOverridePreference"
 				name="extensions.org.bonsaimind.thintabs.text.font.size.override"
 				type="bool" />
+			<preference id="textHidePreference"
+				name="extensions.org.bonsaimind.thintabs.text.hide"
+				type="bool" />
 			<preference id="textPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.text.padding.top"
 				type="int" />
@@ -128,6 +131,9 @@
 		
 		<groupbox orient="vertical">
 			<caption label="Text / Sitename" />
+			
+			<checkbox preference="textHidePreference" id="textHide"
+				label="Hide text" tooltiptext="Removes the text from the tabs." />
 			
 			<hbox align="horizontal">
 				<label control="textPaddingTop" value="Padding top: " />

@@ -111,6 +111,15 @@ var ThinTabs = {
 		Preferences.registerInt("text.font.size", 8, fontSizeFunction);
 		Preferences.registerBool("text.font.size.override", false, fontSizeFunction);
 		
+		Preferences.registerBool("text.hide", false, function(name, value) {
+			if (value) {
+				var css = new CSSBuilder(".tab-text").hide();
+				DynamicStyleSheets.register(name, css.toCSS());
+			} else {
+				DynamicStyleSheets.unregister(name);
+			}
+		});
+		
 		Preferences.registerInt("text.padding.top", 1, function(name, value) {
 			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])").autoPadding("top", value);
 			DynamicStyleSheets.register(name, css.toCSS());
