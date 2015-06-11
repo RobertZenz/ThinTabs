@@ -86,6 +86,17 @@ var ThinTabs = {
 			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("start", value);
 			DynamicStyleSheets.register(name, css.toCSS());
 		});
+		var tabsWidthFunction = function(name, value) {
+			if (Preferences.getBool("tabs.width.override")) {
+				var width = Preferences.getInt("tabs.width")
+				var css = new CSSBuilder(".tabbrowser-tab").forceWidth(width);
+				DynamicStyleSheets.register("tabs.width", css.toCSS());
+			} else {
+				DynamicStyleSheets.unregister("tabs.width");
+			}
+		}
+		Preferences.registerInt("tabs.width", 200, tabsWidthFunction);
+		Preferences.registerBool("tabs.width.override", false, tabsWidthFunction);
 		
 		var fontFamilyFunction = function(name, value) {
 			if (Preferences.getBool("text.font.family.override")) {

@@ -31,6 +31,12 @@
 			<preference id="tabsPaddingStartPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.padding.start"
 				type="int" />
+			<preference id="tabsWidthPreference"
+				name="extensions.org.bonsaimind.thintabs.tabs.width"
+				type="int" />
+			<preference id="tabsWidthOverridePreference"
+				name="extensions.org.bonsaimind.thintabs.tabs.width.override"
+				type="bool" />
 			<preference id="textPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.text.padding.top"
 				type="int" />
@@ -105,6 +111,23 @@
 				</tooltip>
 				<textbox type="number" increment="1" min="-9999999"
 					preference="tabsPaddingEndPreference" id="tabsPaddingEnd" tooltip="tabsPaddingEndTooltip" />
+			</hbox>
+			
+			<checkbox id="tabsWidthOverride"
+				label="Override tab width"
+				preference="tabsWidthOverridePreference"
+				tooltiptext="Override the tab width." />
+			
+			<hbox align="horizontal">
+				<label control="tabsWidth" value="Tab width: " />
+				<spacer flex="1" />
+				<tooltip id="tabsWidthTooltip">
+					<label
+						value="Defines the width of the tabs." />
+					<label value="Default value: 200" style="font-weight: bold;" />
+				</tooltip>
+				<textbox type="number" increment="1" min="0"
+					preference="tabsWidthPreference" id="tabsWidth" tooltip="tabsWidthTooltip" />
 			</hbox>
 		</groupbox>
 		
