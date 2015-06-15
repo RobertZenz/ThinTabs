@@ -66,13 +66,17 @@ var ThinTabs = {
 			css = css.addSelector(".tab-background-end[selected=true]::after");
 			css = css.addSelector(".tab-background-end[selected=true]::before");
 			css = css.addSelector(".tabbrowser-tabs");
+			css = css.addSelector("#tabs-toolbar"); // Thunderbird
+			css = css.addSelector("#tabbar-toolbar"); // Thunderbird
 			css = css.height(value);
 			css = css.minHeight(value);
 			DynamicStyleSheets.register(name, css.toCSS());
 		});
 		Preferences.registerBool("tabs.hide", false, function(name, value) {
 			if (value) {
-				var css = new CSSBuilder("#TabsToolbar").hide();
+				var css = new CSSBuilder("#TabsToolbar");
+				css = css.addSelector("#tabs-toolbar"); // Thunderbird
+				css = css.hide();
 				DynamicStyleSheets.register(name, css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister(name);
@@ -89,7 +93,10 @@ var ThinTabs = {
 		var tabsWidthFunction = function(name, value) {
 			if (Preferences.getBool("tabs.width.override")) {
 				var width = Preferences.getInt("tabs.width")
-				var css = new CSSBuilder(".tabbrowser-tab").forceWidth(width);
+				var css = new CSSBuilder(".tabbrowser-tab");
+				// TODO .tabmail-tab does not accept the forced width.
+				css = css.addSelector(".tabmail-tab"); // Thunderbird
+				css = css.forceWidth(width);
 				DynamicStyleSheets.register("tabs.width", css.toCSS());
 			} else {
 				DynamicStyleSheets.unregister("tabs.width");
