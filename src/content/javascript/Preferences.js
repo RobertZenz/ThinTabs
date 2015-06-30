@@ -13,23 +13,25 @@ var EXPORTED_SYMBOLS = [ "Preferences" ];
  * A utility that allows to easily register preferences with default values an
  * callbacks in case that the value of the preference changes.
  */
-var Preferences = {
+var Preferences = function() {
 	/** The root branch of the preferences. */
-	branch : null,
+	this.branch = null,
 	/** The callbacks that should be invoked. */
-	changeCallbacks : {},
+	this.changeCallbacks = {},
 	/** The default preference service provided by Firefox. */
-	defaultPreferences : null,
+	this.defaultPreferences = null,
 	/** The functions for acquiring the value of a preference. */
-	getFunctions : {},
+	this.getFunctions = {},
 	/** The preferences service provided by Firefox. */
-	preferences : null,
+	this.preferences = null,
 	
 	/**
 	 * Destroys this Preferences.
 	 */
-	destroy : function() {
-		this.preferences.removeObserver("", this);
+	this.destroy = function() {
+		if (this.preferences != null) {
+			this.preferences.removeObserver("", this);
+		}
 		
 		this.changeCallbacks = null;
 		this.defaultPreferences = null;
@@ -47,7 +49,7 @@ var Preferences = {
 	 * @returns The value of the preference, or the default value if the
 	 *          preference does not exist.
 	 */
-	getBool : function(name, defaultValue) {
+	this.getBool = function(name, defaultValue) {
 		try {
 			return this.preferences.getBoolPref(name);
 		} catch (e) {
@@ -67,7 +69,7 @@ var Preferences = {
 	 * @returns The value of the preference, or the default value if the
 	 *          preference does not exist.
 	 */
-	getChar : function(name, defaultValue) {
+	this.getChar = function(name, defaultValue) {
 		try {
 			return this.preferences.getCharPref(name);
 		} catch (e) {
@@ -87,7 +89,7 @@ var Preferences = {
 	 * @returns The value of the preference, or the default value if the
 	 *          preference does not exist.
 	 */
-	getInt : function(name, defaultValue) {
+	this.getInt = function(name, defaultValue) {
 		try {
 			return this.preferences.getIntPref(name);
 		} catch (e) {
@@ -102,7 +104,9 @@ var Preferences = {
 	 * 
 	 * @param branch The branch/prefix of all preferences managed by this.
 	 */
-	init : function(branch) {
+	this.init = function(branch) {
+		this.destroy();
+		
 		this.branch = branch;
 		
 		this.changeCallbacks = {};
@@ -125,7 +129,7 @@ var Preferences = {
 	 * @param topic The change topic.
 	 * @param data The name of the changed preference.
 	 */
-	observe : function(subject, topic, data) {
+	this.observe = function(subject, topic, data) {
 		if (topic != "nsPref:changed") {
 			return;
 		}
@@ -150,7 +154,7 @@ var Preferences = {
 	 *            value.
 	 * @param getFunction The function to get the value.
 	 */
-	register : function(name, defaultValue, onChange, defaultFunction, getFunction) {
+	this.register = function(name, defaultValue, onChange, defaultFunction, getFunction) {
 		defaultFunction(name, defaultValue);
 		
 		this.changeCallbacks[name] = onChange;
@@ -171,7 +175,7 @@ var Preferences = {
 	 *            registered. The callback is expected to take two parameters,
 	 *            the name of the preference and its value.
 	 */
-	registerBool : function(name, defaultValue, onChange) {
+	this.registerBool = function(name, defaultValue, onChange) {
 		this.register(name, defaultValue, onChange, this.defaultPreferences.setBoolPref, this.preferences.getBoolPref);
 	},
 	
@@ -185,7 +189,7 @@ var Preferences = {
 	 *            registered. The callback is expected to take two parameters,
 	 *            the name of the preference and its value.
 	 */
-	registerChar : function(name, defaultValue, onChange) {
+	this.registerChar = function(name, defaultValue, onChange) {
 		this.register(name, defaultValue, onChange, this.defaultPreferences.setCharPref, this.preferences.getCharPref);
 	},
 	
@@ -199,7 +203,7 @@ var Preferences = {
 	 *            registered. The callback is expected to take two parameters,
 	 *            the name of the preference and its value.
 	 */
-	registerInt : function(name, defaultValue, onChange) {
+	this.registerInt = function(name, defaultValue, onChange) {
 		this.register(name, defaultValue, onChange, this.defaultPreferences.setIntPref, this.preferences.getIntPref);
 	}
 };
