@@ -189,6 +189,14 @@ var CSSBuilder = function(selector) {
 		return this;
 	};
 	
+	/**
+	 * Sets the margin for the given postfix (if any) to the given value.
+	 * 
+	 * @param postfix The postfix, so top, bottom, left or right. Can be null or
+	 *            empty for all.
+	 * @param value The value for the margin.
+	 * @return This object.
+	 */
 	this.margin = function(postfix, value) {
 		var declaration = "";
 		
@@ -250,6 +258,7 @@ var CSSBuilder = function(selector) {
 	 * 
 	 * @param postfix The postfix, so top, bottom, left or right. Can be null or
 	 *            empty for all.
+	 * @param value The value for the margin.
 	 * @return This object.
 	 */
 	this.padding = function(postfix, value) {
