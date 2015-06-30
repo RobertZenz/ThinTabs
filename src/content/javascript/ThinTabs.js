@@ -19,9 +19,11 @@ Components.utils.import("chrome://thintabs/content/javascript/Preferences.js");
 
 var ThinTabs = {
 	preferences : new Preferences(),
+	tabmixPreferences : new Preferences(),
 	
 	destroy : function() {
 		this.preferences.destroy();
+		this.tabmixPreferences.destroy();
 		DynamicStyleSheets.unregisterAll();
 	},
 	
@@ -30,12 +32,23 @@ var ThinTabs = {
 		DynamicStyleSheets.registerPath("main", "resource://thintabs/content/css/main.css");
 		
 		this.preferences.init("extensions.org.bonsaimind.thintabs.");
+		this.tabmixPreferences.init("extensions.tabmix.");
 		this.initPreferences();
 	},
 	
 	initPreferences : function() {
 		// Needed for the inlined functions further down.
 		var instance = this;
+		
+		var tabmixSupport = function(name, value) {
+			var tabBarHeight = instance.preferences.getInt("tabs.height");
+			var multirowCount = instance.tabmixPreferences.getInt("tabBarMaxRow", 1);
+			
+			var cssTabMixSupport = new CSSBuilder("#tabmixScrollBox");
+			cssTabMixSupport = cssTabMixSupport.forceHeight(tabBarHeight * multirowCount);
+			DynamicStyleSheets.register("tabmixplus.support", cssTabMixSupport.toCSS());
+		}
+		this.tabmixPreferences.addListener("tabBarMaxRow", tabmixSupport, this.tabmixPreferences.getInt);
 		
 		this.preferences.registerBool("close.hide", false, function(name, value) {
 			if (value) {
@@ -88,9 +101,7 @@ var ThinTabs = {
 			cssSecondary = cssSecondary.forceHeight(value);
 			DynamicStyleSheets.register(name + "-secondary", cssSecondary.toCSS());
 			
-			var cssTabMixSupport = new CSSBuilder("#tabmixScrollBox");
-			cssTabMixSupport = cssTabMixSupport.forceHeight(value * 2); //this.preferences.getInt("extensions.tabmix.tabBarMaxRow"));
-			DynamicStyleSheets.register(name + "-tabmixplus-support", cssTabMixSupport.toCSS());
+			tabmixSupport();
 		});
 		this.preferences.registerBool("tabs.hide", false, function(name, value) {
 			if (value) {
