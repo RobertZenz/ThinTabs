@@ -65,25 +65,27 @@ var ThinTabs = {
 			css = css.addSelector(".tab-background-end");
 			css = css.addSelector(".tab-background-end[selected=true]::after");
 			css = css.addSelector(".tab-background-end[selected=true]::before");
-			//css = css.addSelector(".tabbrowser-tabs");
-			//css = css.addSelector("#tabs-toolbar"); // Thunderbird
-			//css = css.addSelector("#tabbar-toolbar"); // Thunderbird
-			css = css.addSelector(".tabbrowser-tab");
-			css = css.addSelector(".tabs-newtab-button");
+			css = css.addSelector("#tabs-toolbar"); // Thunderbird
+			css = css.addSelector("#tabbar-toolbar"); // Thunderbird
 			css = css.height(value);
 			css = css.minHeight(value);
 			DynamicStyleSheets.register(name, css.toCSS());
 			
-			var css2 = new CSSBuilder("#tabmixScrollBox");
-			css2 = css2.forceHeight(value * 2); //Preferences.getInt("extensions.tabmix.tabBarMaxRow"));
-			DynamicStyleSheets.register("test", css2.toCSS());
+			var cssSecondary = new CSSBuilder("#tabmixScrollBox > *");
+			cssSecondary = cssSecondary.addSelector("#alltabs-button");
+			cssSecondary = cssSecondary.addSelector("#new-tab-button");
+			cssSecondary = cssSecondary.addSelector("#tabmix-tabs-closebutton");
+			cssSecondary = cssSecondary.addSelector(".tabbrowser-tab");
+			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .scrollbutton-down");
+			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .scrollbutton-up");
+			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-overflow-end-indicator");
+			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-overflow-start-indicator");
+			cssSecondary = cssSecondary.forceHeight(value);
+			DynamicStyleSheets.register(name + "-secondary", cssSecondary.toCSS());
 			
-			var css3 = new CSSBuilder("#tabmixScrollBox > *");
-			css3 = css3.addSelector("#alltabs-button");
-			css3 = css3.addSelector("#new-tab-button");
-			css3 = css3.addSelector("#tabmix-tabs-closebutton");
-			css3 = css3.forceHeight(value);
-			DynamicStyleSheets.register("test2", css3.toCSS());
+			var cssTabMixSupport = new CSSBuilder("#tabmixScrollBox");
+			cssTabMixSupport = cssTabMixSupport.forceHeight(value * 2); //Preferences.getInt("extensions.tabmix.tabBarMaxRow"));
+			DynamicStyleSheets.register(name + "-tabmixplus-support", cssTabMixSupport.toCSS());
 		});
 		Preferences.registerBool("tabs.hide", false, function(name, value) {
 			if (value) {

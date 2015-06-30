@@ -22,12 +22,24 @@
 .tab-background-end[selected=true]::after,
 .tab-background-end[selected=true]::before,
 .tabbrowser-tabs {
+	/* Force that these items do not have a minimum height. This is
+	 * especially needed for supporting TabMix Plus. */
+	min-height: 0px !important;
+	
 	/* Make sure that the text is correctly aligned. */
 	-moz-box-align: none !important;
 }
 
+/* Needed to make sure that the tab bar will not grow by one pixel
+ * if it overflows. */
+#alltabs-button,
+#new-tab-button,
+#tabbrowser-tabs > .tabbrowser-arrowscrollbox > * {
+	margin-bottom: 0px !important;
+}
+
 /* This is the box at the left and right of the tabs. */
-.tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
+#tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-scrollbox {
 	-moz-padding-end: 0px !important;
 	-moz-padding-start: 0px !important;
 }
