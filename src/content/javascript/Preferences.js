@@ -26,6 +26,21 @@ var Preferences = function() {
 	this.preferences = null,
 	
 	/**
+	 * Adds a listener for the given prefrence.
+	 * 
+	 * @param name The name of the preference.
+	 * @param onChange The callback/function to invoke if the preference
+	 *            changes. This will be invoked right after the preference is
+	 *            registered. The callback is expected to take two parameters,
+	 *            the name of the preference and its value.
+	 * @param getFunction The function to get the value.
+	 */
+	this.addListener = function(name, onChange, getFunction) {
+		this.changeCallbacks[name] = onChange;
+		this.getFunctions[name] = getFunction;
+	}
+	
+	/**
 	 * Destroys this Preferences.
 	 */
 	this.destroy = function() {
@@ -157,8 +172,7 @@ var Preferences = function() {
 	this.register = function(name, defaultValue, onChange, defaultFunction, getFunction) {
 		defaultFunction(name, defaultValue);
 		
-		this.changeCallbacks[name] = onChange;
-		this.getFunctions[name] = getFunction;
+		this.addListener(name, onChange, getFunction);
 		
 		// Invoke the observe method so that the callback is invoked at least
 		// once and right after the preference is registered.
