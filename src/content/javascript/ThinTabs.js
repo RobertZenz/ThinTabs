@@ -58,7 +58,7 @@ var ThinTabs = {
 				DynamicStyleSheets.unregister(name);
 			}
 		});
-		this.preferences.registerInt("close.padding.top", -1, function(name, value) {
+		this.preferences.registerInt("close.padding.top", -5, function(name, value) {
 			var css = new CSSBuilder(".tab-close-button").autoPadding("top", value);
 			DynamicStyleSheets.register(name, css.toCSS());
 			
@@ -78,7 +78,7 @@ var ThinTabs = {
 				DynamicStyleSheets.unregister(name);
 			}
 		});
-		this.preferences.registerInt("icon.padding.top", -1, function(name, value) {
+		this.preferences.registerInt("icon.padding.top", -3, function(name, value) {
 			var css = new CSSBuilder(".tab-icon-image").autoPadding("top", value);
 			DynamicStyleSheets.register(name, css.toCSS());
 			
@@ -127,11 +127,11 @@ var ThinTabs = {
 				DynamicStyleSheets.unregister(name);
 			}
 		});
-		this.preferences.registerInt("tabs.padding.end", 7, function(name, value) {
+		this.preferences.registerInt("tabs.padding.end", 6, function(name, value) {
 			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("end", value);
 			DynamicStyleSheets.register(name, css.toCSS());
 		});
-		this.preferences.registerInt("tabs.padding.start", 1, function(name, value) {
+		this.preferences.registerInt("tabs.padding.start", 3, function(name, value) {
 			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("start", value);
 			DynamicStyleSheets.register(name, css.toCSS());
 		});
