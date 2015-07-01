@@ -79,11 +79,12 @@ var ThinTabs = {
 			}
 		});
 		this.preferences.registerInt("icon.padding.top", -3, function(name, value) {
-			var css = new CSSBuilder(".tab-icon-image").autoPadding("top", value);
+			var css = new CSSBuilder(".tab-icon-image").addSelector(".tab-throbber")
+			css = css.autoPadding("top", value);
 			DynamicStyleSheets.register(name, css.toCSS());
 			
 			// TODO This fixes that the icon is squeezed on 28.
-			var cssSecondary = new CSSBuilder(".tab-icon-image")
+			var cssSecondary = new CSSBuilder(".tab-icon-image").addSelector(".tab-throbber");
 			if (value >= -5) {
 				cssSecondary = cssSecondary.margin("bottom", -value - 5);
 			}
