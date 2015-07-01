@@ -1,0 +1,45 @@
+1.5.3
+-----
+
+Attention: Because of the changes needed for TabMix Plus, you may need
+           to recalibrate your settings (the defaults have been adjusted).
+           I'm sorry for that, but it was inevitable in the end.
+
+ * Minimum required Firefox version is no 4.0.
+ * Removed the nonsense padding below the tabbar.
+ * Added setting to completely hide the tabbar.
+ * Added setting to hide the text of the tabs.
+ * Added setting to force a certain width of tabs.
+ * Added Thunderbird support.
+ * Added TabMix Plus support (Multirow tabbar).
+
+Known bugs:
+
+ * Setting the tab width does nothing in Thunderbird.
+ * Changing the heights of the tabs while the multirow tabbar is active
+   might lead to visual glitches (tabbar too small or large for the tabs).
+   A restart of Firefox *might* be required, could also be that fiddling
+   with the row setting of TabMix Plus fixes it, or closing tabs until
+   the tabbar collapses to one row. 1.4.1
+
+
+1.4.1
+-----
+
+ * Added possibility to define the padding (from the top) for the icon
+   and the close button.
+ * All paddings can be negative.
+ * Upped compatibility to 34.* 
+
+
+1.2.1
+-----
+
+ * Added options dialog.
+
+
+1.0.1
+-----
+
+ * First release.
+
