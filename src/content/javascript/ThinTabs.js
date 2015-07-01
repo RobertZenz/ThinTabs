@@ -61,6 +61,13 @@ var ThinTabs = {
 		this.preferences.registerInt("close.padding.top", -1, function(name, value) {
 			var css = new CSSBuilder(".tab-close-button").autoPadding("top", value);
 			DynamicStyleSheets.register(name, css.toCSS());
+			
+			// TODO This fixes that the close button is squeezed on 28.
+			var cssSecondary = new CSSBuilder(".tab-close-button")
+			if (value >= -10) {
+				cssSecondary = cssSecondary.margin("bottom", -value - 10);
+			}
+			DynamicStyleSheets.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
 		this.preferences.registerBool("icon.hide", false, function(name, value) {
@@ -74,6 +81,13 @@ var ThinTabs = {
 		this.preferences.registerInt("icon.padding.top", -1, function(name, value) {
 			var css = new CSSBuilder(".tab-icon-image").autoPadding("top", value);
 			DynamicStyleSheets.register(name, css.toCSS());
+			
+			// TODO This fixes that the icon is squeezed on 28.
+			var cssSecondary = new CSSBuilder(".tab-icon-image")
+			if (value >= -5) {
+				cssSecondary = cssSecondary.margin("bottom", -value - 5);
+			}
+			DynamicStyleSheets.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
 		this.preferences.registerInt("tabs.height", 19, function(name, value) {
