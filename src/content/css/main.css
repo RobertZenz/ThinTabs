@@ -32,8 +32,8 @@
 
 /* Needed to make sure that the tab bar will not grow by one pixel
  * if it overflows. */
-#alltabs-button,
-#new-tab-button,
+#TabsToolbar > #alltabs-button,
+#TabsToolbar > #new-tab-button,
 #tabbrowser-tabs > .tabbrowser-arrowscrollbox > * {
 	margin-bottom: 0px !important;
 }

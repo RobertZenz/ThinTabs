@@ -90,9 +90,9 @@ var ThinTabs = {
 			DynamicStyleSheets.register(name, css.toCSS());
 			
 			var cssSecondary = new CSSBuilder("#tabmixScrollBox > *");
-			cssSecondary = cssSecondary.addSelector("#alltabs-button");
-			cssSecondary = cssSecondary.addSelector("#new-tab-button");
-			cssSecondary = cssSecondary.addSelector("#tabmix-tabs-closebutton");
+			cssSecondary = cssSecondary.addSelector("#TabsToolbar > #alltabs-button");
+			cssSecondary = cssSecondary.addSelector("#TabsToolbar > #new-tab-button");
+			cssSecondary = cssSecondary.addSelector("#TabsToolbar > #tabmix-tabs-closebutton");
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tab");
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .scrollbutton-down");
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .scrollbutton-up");
