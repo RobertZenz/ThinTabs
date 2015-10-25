@@ -13,23 +13,26 @@ var EXPORTED_SYMBOLS = [ "ThinTabs" ];
 
 Components.utils.import("resource://gre/modules/Services.jsm");
 
-Components.utils.import("chrome://thintabs/content/javascript/CSSBuilder.js");
-Components.utils.import("chrome://thintabs/content/javascript/DynamicStyleSheets.js");
-Components.utils.import("chrome://thintabs/content/javascript/Preferences.js");
+Components.utils.import("chrome://thintabs/content/javascript/sfab/CSSBuilder.js");
+Components.utils.import("chrome://thintabs/content/javascript/sfab/DynamicStyleSheets.js");
+Components.utils.import("chrome://thintabs/content/javascript/sfab/Preferences.js");
 
 var ThinTabs = {
 	preferences : new Preferences(),
+	
+	styleSheets : new DynamicStyleSheets(),
+	
 	tabmixPreferences : new Preferences(),
 	
 	destroy : function() {
 		this.preferences.destroy();
 		this.tabmixPreferences.destroy();
-		DynamicStyleSheets.unregisterAll();
+		this.styleSheets.unregisterAll();
 	},
 	
 	init : function() {
-		DynamicStyleSheets.init();
-		DynamicStyleSheets.registerPath("main", "resource://thintabs/content/css/main.css");
+		this.styleSheets.init();
+		this.styleSheets.registerPath("main", "resource://thintabs/content/css/main.css");
 		
 		this.preferences.init("extensions.org.bonsaimind.thintabs.");
 		this.tabmixPreferences.init("extensions.tabmix.");
@@ -38,57 +41,57 @@ var ThinTabs = {
 	
 	initPreferences : function() {
 		// Needed for the inlined functions further down.
-		var instance = this;
+		var _this = this;
 		
 		var tabmixSupport = function(name, value) {
-			var tabBarHeight = instance.preferences.getInt("tabs.height");
-			var multirowCount = instance.tabmixPreferences.getInt("tabBarMaxRow", 1);
+			var tabBarHeight = _this.preferences.getInt("tabs.height");
+			var multirowCount = _this.tabmixPreferences.getInt("tabBarMaxRow", 1);
 			
 			var cssTabMixSupport = new CSSBuilder("#tabmixScrollBox");
 			cssTabMixSupport = cssTabMixSupport.forceHeight(tabBarHeight * multirowCount);
-			DynamicStyleSheets.register("tabmixplus.support", cssTabMixSupport.toCSS());
+			_this.styleSheets.register("tabmixplus.support", cssTabMixSupport.toCSS());
 		}
 		this.tabmixPreferences.addListener("tabBarMaxRow", tabmixSupport, this.tabmixPreferences.getInt);
 		
 		this.preferences.registerBool("close.hide", false, function(name, value) {
 			if (value) {
 				var css = new CSSBuilder(".tab-close-button:not([pinned])").hide();
-				DynamicStyleSheets.register(name, css.toCSS());
+				_this.styleSheets.register(name, css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister(name);
+				_this.styleSheets.unregister(name);
 			}
 		});
 		this.preferences.registerInt("close.padding.top", -5, function(name, value) {
 			var css = new CSSBuilder(".tab-close-button").autoPadding("top", value);
-			DynamicStyleSheets.register(name, css.toCSS());
+			_this.styleSheets.register(name, css.toCSS());
 			
 			// TODO This fixes that the close button is squeezed on 28.
 			var cssSecondary = new CSSBuilder(".tab-close-button")
 			if (value >= -10) {
 				cssSecondary = cssSecondary.margin("bottom", -value - 10);
 			}
-			DynamicStyleSheets.register(name + ".secondary", cssSecondary.toCSS());
+			_this.styleSheets.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
 		this.preferences.registerBool("icon.hide", false, function(name, value) {
 			if (value) {
 				var css = new CSSBuilder(".tab-icon-image:not([pinned])").hide();
-				DynamicStyleSheets.register(name, css.toCSS());
+				_this.styleSheets.register(name, css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister(name);
+				_this.styleSheets.unregister(name);
 			}
 		});
 		this.preferences.registerInt("icon.padding.top", -3, function(name, value) {
 			var css = new CSSBuilder(".tab-icon-image").addSelector(".tab-throbber")
 			css = css.autoPadding("top", value);
-			DynamicStyleSheets.register(name, css.toCSS());
+			_this.styleSheets.register(name, css.toCSS());
 			
 			// TODO This fixes that the icon is squeezed on 28.
 			var cssSecondary = new CSSBuilder(".tab-icon-image").addSelector(".tab-throbber");
 			if (value >= -5) {
 				cssSecondary = cssSecondary.margin("bottom", -value - 5);
 			}
-			DynamicStyleSheets.register(name + ".secondary", cssSecondary.toCSS());
+			_this.styleSheets.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
 		this.preferences.registerInt("tabs.height", 19, function(name, value) {
@@ -102,7 +105,7 @@ var ThinTabs = {
 			css = css.addSelector("#tabbar-toolbar"); // Thunderbird
 			css = css.height(value);
 			css = css.minHeight(value);
-			DynamicStyleSheets.register(name, css.toCSS());
+			_this.styleSheets.register(name, css.toCSS());
 			
 			var cssSecondary = new CSSBuilder("#tabmixScrollBox > *");
 			cssSecondary = cssSecondary.addSelector("#TabsToolbar > #alltabs-button");
@@ -114,7 +117,7 @@ var ThinTabs = {
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-overflow-end-indicator");
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-overflow-start-indicator");
 			cssSecondary = cssSecondary.forceHeight(value);
-			DynamicStyleSheets.register(name + "-secondary", cssSecondary.toCSS());
+			_this.styleSheets.register(name + "-secondary", cssSecondary.toCSS());
 			
 			tabmixSupport();
 		});
@@ -123,53 +126,53 @@ var ThinTabs = {
 				var css = new CSSBuilder("#TabsToolbar");
 				css = css.addSelector("#tabs-toolbar"); // Thunderbird
 				css = css.hide();
-				DynamicStyleSheets.register(name, css.toCSS());
+				_this.styleSheets.register(name, css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister(name);
+				_this.styleSheets.unregister(name);
 			}
 		});
 		this.preferences.registerInt("tabs.padding.end", 6, function(name, value) {
 			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("end", value);
-			DynamicStyleSheets.register(name, css.toCSS());
+			_this.styleSheets.register(name, css.toCSS());
 		});
 		this.preferences.registerInt("tabs.padding.start", 3, function(name, value) {
 			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("start", value);
-			DynamicStyleSheets.register(name, css.toCSS());
+			_this.styleSheets.register(name, css.toCSS());
 		});
 		var tabsWidthFunction = function(name, value) {
-			if (instance.preferences.getBool("tabs.width.override")) {
-				var width = instance.preferences.getInt("tabs.width")
+			if (_this.preferences.getBool("tabs.width.override")) {
+				var width = _this.preferences.getInt("tabs.width")
 				var css = new CSSBuilder(".tabbrowser-tab");
 				// TODO .tabmail-tab does not accept the forced width.
 				css = css.addSelector(".tabmail-tab"); // Thunderbird
 				css = css.forceWidth(width);
-				DynamicStyleSheets.register("tabs.width", css.toCSS());
+				_this.styleSheets.register("tabs.width", css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister("tabs.width");
+				_this.styleSheets.unregister("tabs.width");
 			}
 		}
 		this.preferences.registerInt("tabs.width", 200, tabsWidthFunction);
 		this.preferences.registerBool("tabs.width.override", false, tabsWidthFunction);
 		
 		var fontFamilyFunction = function(name, value) {
-			if (instance.preferences.getBool("text.font.family.override")) {
+			if (_this.preferences.getBool("text.font.family.override")) {
 				var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
-				css = css.fontFamily(instance.preferences.getChar("text.font.family"));
-				DynamicStyleSheets.register("text.font.family", css.toCSS());
+				css = css.fontFamily(_this.preferences.getChar("text.font.family"));
+				_this.styleSheets.register("text.font.family", css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister("text.font.family");
+				_this.styleSheets.unregister("text.font.family");
 			}
 		};
 		this.preferences.registerChar("text.font.family", "monospace", fontFamilyFunction);
 		this.preferences.registerBool("text.font.family.override", false, fontFamilyFunction);
 		
 		var fontSizeFunction = function(name, value) {
-			if (instance.preferences.getBool("text.font.size.override")) {
+			if (_this.preferences.getBool("text.font.size.override")) {
 				var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
-				css = css.fontSize(instance.preferences.getInt("text.font.size"));
-				DynamicStyleSheets.register("text.font.size", css.toCSS());
+				css = css.fontSize(_this.preferences.getInt("text.font.size"));
+				_this.styleSheets.register("text.font.size", css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister("text.font.size");
+				_this.styleSheets.unregister("text.font.size");
 			}
 		};
 		this.preferences.registerInt("text.font.size", 8, fontSizeFunction);
@@ -178,23 +181,23 @@ var ThinTabs = {
 		this.preferences.registerBool("text.hide", false, function(name, value) {
 			if (value) {
 				var css = new CSSBuilder(".tab-text").hide();
-				DynamicStyleSheets.register(name, css.toCSS());
+				_this.styleSheets.register(name, css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister(name);
+				_this.styleSheets.unregister(name);
 			}
 		});
 		
 		this.preferences.registerInt("text.padding.top", 1, function(name, value) {
 			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])").autoPadding("top", value);
-			DynamicStyleSheets.register(name, css.toCSS());
+			_this.styleSheets.register(name, css.toCSS());
 		});
 		
 		this.preferences.registerBool("throbber.hide", false, function(name, value) {
 			if (value) {
 				var css = new CSSBuilder(".tab-throbber:not([pinned])").hide();
-				DynamicStyleSheets.register(name, css.toCSS());
+				_this.styleSheets.register(name, css.toCSS());
 			} else {
-				DynamicStyleSheets.unregister(name);
+				_this.styleSheets.unregister(name);
 			}
 		});
 	}
