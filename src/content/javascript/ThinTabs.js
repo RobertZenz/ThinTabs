@@ -55,14 +55,16 @@ var ThinTabs = {
 		
 		this.preferences.registerBool("close.hide", false, function(name, value) {
 			if (value) {
-				var css = new CSSBuilder(".tab-close-button:not([pinned])").hide();
+				var css = new CSSBuilder(".tab-close-button:not([pinned])");
+				css = css.hide();
 				_this.styleSheets.register(name, css.toCSS());
 			} else {
 				_this.styleSheets.unregister(name);
 			}
 		});
 		this.preferences.registerInt("close.padding.top", -5, function(name, value) {
-			var css = new CSSBuilder(".tab-close-button").autoPadding("top", value);
+			var css = new CSSBuilder(".tab-close-button");
+			css = css.autoPadding("top", value);
 			_this.styleSheets.register(name, css.toCSS());
 			
 			// TODO This fixes that the close button is squeezed on 28.
@@ -75,19 +77,23 @@ var ThinTabs = {
 		
 		this.preferences.registerBool("icon.hide", false, function(name, value) {
 			if (value) {
-				var css = new CSSBuilder(".tab-icon-image:not([pinned])").hide();
+				var css = new CSSBuilder(".tab-icon-image:not([pinned])");
+				css = css.hide();
 				_this.styleSheets.register(name, css.toCSS());
 			} else {
 				_this.styleSheets.unregister(name);
 			}
 		});
 		this.preferences.registerInt("icon.padding.top", -3, function(name, value) {
-			var css = new CSSBuilder(".tab-icon-image").addSelector(".tab-throbber")
+			var css = new CSSBuilder(".tab-icon-image");
+			css = css.addSelector(".tab-throbber")
 			css = css.autoPadding("top", value);
 			_this.styleSheets.register(name, css.toCSS());
 			
 			// TODO This fixes that the icon is squeezed on 28.
-			var cssSecondary = new CSSBuilder(".tab-icon-image").addSelector(".tab-throbber");
+			var cssSecondary = new CSSBuilder(".tab-icon-image");
+			css = css.addSelector(".tab-throbber");
+			
 			if (value >= -5) {
 				cssSecondary = cssSecondary.margin("bottom", -value - 5);
 			}
@@ -132,11 +138,13 @@ var ThinTabs = {
 			}
 		});
 		this.preferences.registerInt("tabs.padding.end", 6, function(name, value) {
-			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("end", value);
+			var css = new CSSBuilder(".tab-content:not([pinned])");
+			css = css.autoMozPadding("end", value);
 			_this.styleSheets.register(name, css.toCSS());
 		});
 		this.preferences.registerInt("tabs.padding.start", 3, function(name, value) {
-			var css = new CSSBuilder(".tab-content:not([pinned])").autoMozPadding("start", value);
+			var css = new CSSBuilder(".tab-content:not([pinned])");
+			css = css.autoMozPadding("start", value);
 			_this.styleSheets.register(name, css.toCSS());
 		});
 		var tabsWidthFunction = function(name, value) {
@@ -180,7 +188,8 @@ var ThinTabs = {
 		
 		this.preferences.registerBool("text.hide", false, function(name, value) {
 			if (value) {
-				var css = new CSSBuilder(".tab-text").hide();
+				var css = new CSSBuilder(".tab-text");
+				css = css.hide();
 				_this.styleSheets.register(name, css.toCSS());
 			} else {
 				_this.styleSheets.unregister(name);
@@ -188,13 +197,15 @@ var ThinTabs = {
 		});
 		
 		this.preferences.registerInt("text.padding.top", 1, function(name, value) {
-			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])").autoPadding("top", value);
+			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
+			css = css.autoPadding("top", value);
 			_this.styleSheets.register(name, css.toCSS());
 		});
 		
 		this.preferences.registerBool("throbber.hide", false, function(name, value) {
 			if (value) {
-				var css = new CSSBuilder(".tab-throbber:not([pinned])").hide();
+				var css = new CSSBuilder(".tab-throbber:not([pinned])");
+				css = css.hide();
 				_this.styleSheets.register(name, css.toCSS());
 			} else {
 				_this.styleSheets.unregister(name);
@@ -202,3 +213,4 @@ var ThinTabs = {
 		});
 	}
 };
+
