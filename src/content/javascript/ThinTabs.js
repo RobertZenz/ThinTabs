@@ -131,7 +131,7 @@ var ThinTabs = {
 			if (value) {
 				var css = new CSSBuilder("#TabsToolbar");
 				css = css.addSelector("#tabs-toolbar"); // Thunderbird
-				css = css.hide();
+				css = css.add("visibility", "collapse");
 				_this.styleSheets.register(name, css.toCSS());
 			} else {
 				_this.styleSheets.unregister(name);
