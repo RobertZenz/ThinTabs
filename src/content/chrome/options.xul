@@ -22,6 +22,9 @@
 			<preference id="tabsHeightPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.height"
 				type="int" />
+			<preference id="tabsHeightForcedPreference"
+				name="extensions.org.bonsaimind.thintabs.tabs.height_forced"
+				type="bool" />
 			<preference id="tabsHidePreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.hide"
 				type="bool"/>
@@ -87,6 +90,11 @@
 				<textbox type="number" increment="1" preference="tabsHeightPreference"
 					id="tabsHeight" tooltip="tabsHeightTooltip" />
 			</hbox>
+			
+			<checkbox id="tabsHeightForced"
+				label="Force height"
+				preference="tabsHeightForcedPreference"
+				tooltiptext="Forces the height of the tabbar." />
 			
 			<hbox align="horizontal">
 				<label control="tabsPaddingStart" value="Padding left: " />

@@ -100,7 +100,9 @@ var ThinTabs = {
 			_this.styleSheets.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
-		this.preferences.registerInt("tabs.height", 19, function(name, value) {
+		var tabsHeightFunction = function(name, value) {
+			var height = _this.preferences.getInt("tabs.height");
+			
 			var css = new CSSBuilder(".tab-background-start[selected=true]::after");
 			css = css.addSelector(".tab-background-start[selected=true]::before");
 			css = css.addSelector(".tab-background-start");
@@ -109,9 +111,9 @@ var ThinTabs = {
 			css = css.addSelector(".tab-background-end[selected=true]::before");
 			css = css.addSelector("#tabs-toolbar"); // Thunderbird
 			css = css.addSelector("#tabbar-toolbar"); // Thunderbird
-			css = css.height(value);
-			css = css.minHeight(value);
-			_this.styleSheets.register(name, css.toCSS());
+			css = css.height(height);
+			css = css.minHeight(height);
+			_this.styleSheets.register("tabs.height", css.toCSS());
 			
 			var cssSecondary = new CSSBuilder("#tabmixScrollBox > *");
 			cssSecondary = cssSecondary.addSelector("#TabsToolbar > #alltabs-button");
@@ -122,11 +124,22 @@ var ThinTabs = {
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .scrollbutton-up");
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-overflow-end-indicator");
 			cssSecondary = cssSecondary.addSelector(".tabbrowser-tabs > .tabbrowser-arrowscrollbox > .arrowscrollbox-overflow-start-indicator");
-			cssSecondary = cssSecondary.forceHeight(value);
-			_this.styleSheets.register(name + "-secondary", cssSecondary.toCSS());
+			cssSecondary = cssSecondary.forceHeight(height);
+			_this.styleSheets.register("tabs.height-secondary", cssSecondary.toCSS());
+			
+			if (_this.preferences.getBool("tabs.force_height")) {
+				var cssForcedHeight = new CSSBuilder(".tabbrowser-tabs");
+				cssForcedHeight.forceHeight(height);
+				_this.styleSheets.register("tabs.height-force", cssForcedHeight.toCSS());
+			} else {
+				_this.styleSheets.unregister("tabs.height-force");
+			}
 			
 			tabmixSupport();
-		});
+		};
+		this.preferences.registerInt("tabs.height", 19, tabsHeightFunction);
+		this.preferences.registerBool("tabs.height_forced", false, tabsHeightFunction);
+		
 		this.preferences.registerBool("tabs.hide", false, function(name, value) {
 			if (value) {
 				var css = new CSSBuilder("#TabsToolbar");
