@@ -196,6 +196,12 @@ var ThinTabs = {
 			}
 		});
 		
+		this.preferences.registerInt("text.padding.left", 3, function(name, value) {
+			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
+			css = css.autoPadding("left", value);
+			_this.styleSheets.register(name, css.toCSS());
+		});
+		
 		this.preferences.registerInt("text.padding.top", 1, function(name, value) {
 			var css = new CSSBuilder(".tab-text.tab-label:not([pinned])");
 			css = css.autoPadding("top", value);

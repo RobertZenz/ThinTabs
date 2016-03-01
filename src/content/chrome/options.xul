@@ -55,6 +55,9 @@
 			<preference id="textHidePreference"
 				name="extensions.org.bonsaimind.thintabs.text.hide"
 				type="bool" />
+			<preference id="textPaddingLeftPreference"
+				name="extensions.org.bonsaimind.thintabs.text.padding.left"
+				type="int" />
 			<preference id="textPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.text.padding.top"
 				type="int" />
@@ -171,6 +174,18 @@
 				</tooltip>
 				<textbox type="number" increment="1" min="-9999999"
 					preference="textPaddingTopPreference" id="textPaddingTop" tooltip="textPaddingTopTooltip" />
+			</hbox>
+			
+			<hbox align="horizontal">
+				<label control="textPaddingLeft" value="Padding left: " />
+				<spacer flex="1" />
+				<tooltip id="textPaddingLeftTooltip">
+					<label
+						value="Defines how much space is between the text/sitename and the left edge or icon." />
+					<label value="Default value: 1" style="font-weight: bold;" />
+				</tooltip>
+				<textbox type="number" increment="1" min="-9999999"
+					preference="textPaddingLeftPreference" id="textPaddingLeft" tooltip="textPaddingLeftTooltip" />
 			</hbox>
 			
 			<checkbox preference="textFontFamilyOverridePreference" id="textFontFamilyOverride"

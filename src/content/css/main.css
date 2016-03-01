@@ -52,8 +52,7 @@
 /* The image of not pinned (normal) tabs. */
 .tab-throbber:not([pinned]),
 .tab-icon-image:not([pinned]) {
-	/* Consume some of the space to our left to move the text closer if there is an icon. */
-	-moz-margin-end: -2px !important;
+	-moz-margin-end: 0px !important;
 }
 
 /* The contents of the tabs. */
@@ -62,9 +61,6 @@
 
 /* The label which holds the site name. */
 .tab-text.tab-label:not([pinned]) {
-	/* Move the text away from the left edge, especially needed if there is no icon. */
-	/* Part of this is consumed again by the image. */
-	-moz-margin-start: 5px !important;
 }
 
 /* The close button of the tab. */
