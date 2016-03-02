@@ -92,7 +92,7 @@ var ThinTabs = {
 			
 			// TODO This fixes that the icon is squeezed on 28.
 			var cssSecondary = new CSSBuilder(".tab-icon-image");
-			css = css.addSelector(".tab-throbber");
+			cssSecondary = cssSecondary.addSelector(".tab-throbber");
 			
 			if (value >= -5) {
 				cssSecondary = cssSecondary.margin("bottom", -value - 5);
