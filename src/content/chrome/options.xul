@@ -190,7 +190,7 @@
 				<tooltip id="textPaddingLeftTooltip">
 					<label
 						value="Defines how much space is between the text/sitename and the left edge or icon." />
-					<label value="Default value: 1" style="font-weight: bold;" />
+					<label value="Default value: 3" style="font-weight: bold;" />
 				</tooltip>
 				<textbox type="number" increment="1" min="-9999999"
 					preference="textPaddingLeftPreference" id="textPaddingLeft" tooltip="textPaddingLeftTooltip" />
