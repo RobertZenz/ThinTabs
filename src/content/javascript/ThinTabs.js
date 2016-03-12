@@ -100,6 +100,21 @@ var ThinTabs = {
 			_this.styleSheets.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
+		this.preferences.registerBool("sound.hide", false, function(name, value) {
+			if (value) {
+				var css = new CSSBuilder(".tab-icon-sound:not([pinned])");
+				css = css.hide();
+				_this.styleSheets.register(name, css.toCSS());
+			} else {
+				_this.styleSheets.unregister(name);
+			}
+		});
+		this.preferences.registerInt("sound.padding.top", -2, function(name, value) {
+			var css = new CSSBuilder(".tab-icon-sound");
+			css = css.autoPadding("top", value);
+			_this.styleSheets.register(name, css.toCSS());
+		});
+		
 		var tabsHeightFunction = function(name, value) {
 			var height = _this.preferences.getInt("tabs.height");
 			

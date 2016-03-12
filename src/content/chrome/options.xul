@@ -19,6 +19,12 @@
 			<preference id="iconPaddingTopPreference"
 				name="extensions.org.bonsaimind.thintabs.icon.padding.top"
 				type="int" />
+			<preference id="soundHidePreference"
+				name="extensions.org.bonsaimind.thintabs.sound.hide"
+				type="bool" />
+			<preference id="soundPaddingTopPreference"
+				name="extensions.org.bonsaimind.thintabs.sound.padding.top"
+				type="int" />
 			<preference id="tabsHeightPreference"
 				name="extensions.org.bonsaimind.thintabs.tabs.height"
 				type="int" />
@@ -214,6 +220,26 @@
 				<spacer flex="1" />
 				<textbox type="number" increment="1" preference="textFontSizePreference"
 					id="textFontSize" tooltiptext="Provides the possibility to set a custom size for the text." />
+			</hbox>
+		</groupbox>
+		
+		<groupbox orient="vertical">
+			<caption label="Sound icon" />
+			
+			<checkbox preference="soundHidePreference" id="soundHide"
+				label="Hide" tooltiptext="Removes the sound icon from the tabs." />
+			
+			<hbox align="horizontal">
+				<label control="soundPaddingTop" value="Padding top: " />
+				<spacer flex="1" />
+				<tooltip id="soundPaddingTopTooltip">
+					<label
+						value="Defines how much space is between the sound icon and the top edge." />
+					<label value="Default value: -1" style="font-weight: bold;" />
+				</tooltip>
+				<textbox type="number" increment="1" min="-9999999"
+					preference="soundPaddingTopPreference" id="soundPaddingTop"
+					tooltip="soundPaddingTopTooltip" />
 			</hbox>
 		</groupbox>
 		
