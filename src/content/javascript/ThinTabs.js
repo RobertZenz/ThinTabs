@@ -62,7 +62,7 @@ var ThinTabs = {
 				_this.styleSheets.unregister(name);
 			}
 		});
-		this.preferences.registerInt("close.padding.top", -5, function(name, value) {
+		this.preferences.registerInt("close.padding.top", -4, function(name, value) {
 			var css = new CSSBuilder(".tab-close-button");
 			css = css.autoPadding("top", value);
 			_this.styleSheets.register(name, css.toCSS());
