@@ -116,10 +116,18 @@ var ThinTabs = {
 				_this.styleSheet.unregister(name);
 			}
 		});
-		this.preferences.registerInt("sound.padding.top", -2, function(name, value) {
+		this.preferences.registerInt("sound.padding.top", -3, function(name, value) {
 			var css = new CSSBuilder(".tab-icon-sound");
 			css = css.autoPadding("top", value);
 			_this.styleSheet.register(name, css.toCSS());
+			
+			// TODO This fixes that the icon is squeezed on 28.
+			var cssSecondary = new CSSBuilder(".tab-icon-sound");
+			
+			if (value >= -5) {
+				cssSecondary = cssSecondary.margin("bottom", -value - 5);
+			}
+			_this.styleSheet.register(name + ".secondary", cssSecondary.toCSS());
 		});
 		
 		var tabsHeightFunction = function(name, value) {
