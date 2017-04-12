@@ -1,0 +1,62 @@
+Changelog
+=========
+
+
+1.6
+---
+
+ * Fixed that hiding the tabbar would break the tab system.
+ * The gap between the icon and the sitename can now be set.
+ * Added an option to force the height of the tab bar.
+ * Fixed typo which could misplace the throbber.
+ * Added options for the sound icon.
+ * The preferences window is now using tabs.
+
+Note: I've seen performance degradations especially on older versions (applying the changes takes two to four seconds). Version 45 did not show such signs, however 41 does.
+
+Note: I've tested the addon with Colorful Tabs, it "seems to work" in so far as you can adjust the settings to be actually usable. However, Colorful Tabs and ThinTabs does have quite some overlap when it comes to the styles that are applied to the tabs, I do not believe that that can be fixed on my end. A possible solution might be to have an option on Colorful Tabs to disable all "theme settings" that it applies.
+
+Known bugs:
+
+ * Setting the tab width does nothing in Thunderbird.
+ * Changing the heights of the tabs while the multirow tabbar is active might lead to visual glitches (tabbar too small or large for the tabs). A restart of Firefox *might* be required, could also be that fiddling with the row setting of TabMix Plus fixes it, or closing tabs until the tabbar collapses to one row. 
+
+
+1.5.3
+-----
+
+Attention: Because of the changes needed for TabMix Plus, you may need to recalibrate your settings (the defaults have been adjusted). I'm sorry for that, but it was inevitable in the end.
+
+ * Minimum required Firefox version is no 4.0.
+ * Removed the nonsense padding below the tabbar.
+ * Added setting to completely hide the tabbar.
+ * Added setting to hide the text of the tabs.
+ * Added setting to force a certain width of tabs.
+ * Added Thunderbird support.
+ * Added TabMix Plus support (Multirow tabbar).
+
+Known bugs:
+
+ * Setting the tab width does nothing in Thunderbird.
+ * Changing the heights of the tabs while the multirow tabbar is active might lead to visual glitches (tabbar too small or large for the tabs). A restart of Firefox *might* be required, could also be that fiddling with the row setting of TabMix Plus fixes it, or closing tabs until the tabbar collapses to one row. 
+
+
+1.4.1
+-----
+
+ * Added possibility to define the padding (from the top) for the icon and the close button.
+ * All paddings can be negative.
+ * Upped compatibility to 34.*
+
+
+1.2.1
+-----
+
+ * Added options dialog.
+
+
+1.0.1
+-----
+
+ * Initial release.
+
