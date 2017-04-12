@@ -9,6 +9,25 @@ Squared Tabs (v1 and v2). You can use it with the Australis default tabs, too,
 but it looks beyond abysmal.
 
 
+No distribution via addons.mozilla.org
+--------------------------------------
+
+Please note that I will **not** distribute any updates via addons.mozilla.org anymore. I do neither agree, nor support, nor do I wish to be associated with the decisions of Mozilla to:
+
+ * ...turn the addon ecosystem into a walled garden, disallowing and disabling the ability of the user to run any addon they might wish to run.
+ * ...drop support for full-fledged addons and instead limit addons to a very, very limited WebExtensions API.
+
+I will only distribute updates via this GitHub page.
+
+With Firefox 57, to be released at the end of 2017, this addon will cease working because support for XUL addons will be dropped. The only workaround I can offer in this regard is to no update Firefox after 56 is released.
+
+
+License
+-------
+
+This addon is licensed under the [Mozilla Public License](https://www.mozilla.org/en-US/MPL/).
+
+
 Build
 -----
 
