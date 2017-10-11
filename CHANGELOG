@@ -2,11 +2,27 @@ Changelog
 =========
 
 
+1.8
+---
+
+ * Added Palemoon as target application.
+
+Known bugs:
+
+ * Setting the tab width does nothing in Thunderbird.
+ * Changing the heights of the tabs while the multirow tabbar is active might lead to visual glitches (tabbar too small or large for the tabs). A restart of Firefox *might* be required, could also be that fiddling with the row setting of TabMix Plus fixes it, or closing tabs until the tabbar collapses to one row. 
+
+
 1.7
 ---
 
  * Tested compatibility with multi-process/e10.
  * Upped compatibility to 54.*
+
+Known bugs:
+
+ * Setting the tab width does nothing in Thunderbird.
+ * Changing the heights of the tabs while the multirow tabbar is active might lead to visual glitches (tabbar too small or large for the tabs). A restart of Firefox *might* be required, could also be that fiddling with the row setting of TabMix Plus fixes it, or closing tabs until the tabbar collapses to one row. 
 
 
 1.6
